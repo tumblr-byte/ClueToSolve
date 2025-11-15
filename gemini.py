@@ -1,32 +1,31 @@
+import streamlit as st
 import json
-import google.auth
-from google.cloud import aiplatform
-from google.generativeai import GenerativeModel
-from google.auth import service_account
+from google.oauth2 import service_account
+from vertexai import generative_models, init as vertex_init
 
 def setup_vertex_ai():
     try:
-        # Load config from config.json
-        with open('config.json', 'r') as f:
-            config = json.load(f)
+        # Load secrets from Streamlit Cloud
+        project_id = st.secrets["project_id"]
+        location = st.secrets["location"]
 
-        project_id = config['project_id']
-        location = config['location']
-        credentials_path = config['credentials_path']
+        # Load service account JSON from secrets (multiline string)
+        service_account_info = json.loads(st.secrets["credentials"])
+        credentials = service_account.Credentials.from_service_account_info(
+            service_account_info
+        )
 
-        # Load credentials from the file path
-        credentials = service_account.Credentials.from_service_account_file(credentials_path)
-
-        # Initialize Vertex AI / Gemini
-        aiplatform.init(
+        # Initialize Vertex AI
+        vertex_init(
             project=project_id,
             location=location,
             credentials=credentials
         )
 
-        # Return a Gemini model instance
-        return GenerativeModel("gemini-2.5-flash")
-    except FileNotFoundError:
-        raise Exception("config.json not found. Please create it with your Vertex AI credentials.")
+        # Return the model instance
+        return generative_models.GenerativeModel("gemini-2.5-flash")
+
+    except KeyError as e:
+        raise Exception(f"Missing secret: {e}")
     except Exception as e:
         raise Exception(f"Failed to setup Vertex AI: {str(e)}")
