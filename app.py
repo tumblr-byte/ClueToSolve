@@ -414,7 +414,8 @@ Topic: {current_question.get('topic', 'Math')}
 """
 
     if similar_topics:
-        hint_context += f"\n✨ They solved similar questions before: {', '.join([f'Q{s['question_id']}' for s in similar_topics[:2]])}"
+        similar_q_ids = ', '.join([f"Q{s['question_id']}" for s in similar_topics[:2]])
+        hint_context += f"\n✨ They solved similar questions before: {similar_q_ids}"
     
     if correct_responses:
         strong_topics = {}
@@ -1219,4 +1220,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
