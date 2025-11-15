@@ -486,8 +486,25 @@ def show_quiz_page():
         st.write(question['question'])
 
         # Options
-        options = question['options']
-        option_keys = list(options.keys())
+        raw_options = question['options']
+
+        # Handle both dictionary and array formats for options
+        if isinstance(raw_options, dict):
+            options = raw_options
+            option_keys = list(options.keys())
+        elif isinstance(raw_options, list):
+            # Convert array to dictionary format
+            options = {
+                "A": raw_options[0] if len(raw_options) > 0 else "",
+                "B": raw_options[1] if len(raw_options) > 1 else "",
+                "C": raw_options[2] if len(raw_options) > 2 else "",
+                "D": raw_options[3] if len(raw_options) > 3 else ""
+            }
+            option_keys = ["A", "B", "C", "D"]
+        else:
+            # Fallback
+            options = {"A": "Option A", "B": "Option B", "C": "Option C", "D": "Option D"}
+            option_keys = ["A", "B", "C", "D"]
 
         # Get previous answer if exists
         previous_response = None
@@ -504,7 +521,7 @@ def show_quiz_page():
         selected_label = st.radio(
             "Choose your answer:",
             option_keys,
-            index=option_keys.index(selected_option) if selected_option else None,
+            index=option_keys.index(selected_option) if selected_option and selected_option in option_keys else None,
             key=f"q_{question['id']}"
         )
 
@@ -876,3 +893,4 @@ def show_results_page():
 
 if __name__ == "__main__":
     main()
+
