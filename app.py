@@ -15,82 +15,324 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS for detective theme
+# Custom CSS for beautiful detective theme
 def local_css():
     st.markdown("""
     <style>
+    /* Import Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    
+    * {
+        font-family: 'Poppins', sans-serif;
+    }
+    
     /* Detective theme colors */
     :root {
         --primary: #1e3a8a;
         --accent: #f97316;
         --success: #10b981;
         --warning: #fbbf24;
+        --danger: #ef4444;
         --background: #f0f9ff;
-    }
-
-    .detective-header {
-        background: linear-gradient(135deg, var(--primary), var(--accent));
-        color: white;
-        padding: 2rem;
-        border-radius: 10px;
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-
-    .case-card {
-        background: white;
-        border: 2px solid var(--primary);
-        border-radius: 10px;
-        padding: 1.5rem;
-        margin: 1rem 0;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    .case-card.locked {
-        border-color: #ef4444;
-        opacity: 0.7;
-    }
-
-    .case-card.unlocked {
-        border-color: var(--success);
-    }
-
-    .hint-box {
-        background: var(--warning);
-        color: black;
-        padding: 1rem;
-        border-radius: 8px;
-        margin: 1rem 0;
-    }
-
-    .results-card {
-        background: var(--background);
-        border-radius: 10px;
-        padding: 1.5rem;
-        margin: 1rem 0;
-    }
-
-    .stButton > button {
-        background: var(--primary) !important;
-        color: white !important;
-        border-radius: 8px !important;
-        padding: 0.75rem 1.5rem !important;
-        font-weight: 600 !important;
-        transition: all 0.3s !important;
-    }
-
-    .stButton > button:hover {
-        background: var(--accent) !important;
-        transform: translateY(-2px) !important;
-    }
-
-    .stProgress > div > div > div {
-        background-color: var(--success) !important;
+        --dark: #1f2937;
     }
 
     /* Hide Streamlit branding */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
+    .stDeployButton {display: none;}
+    
+    /* Main background */
+    .main {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-attachment: fixed;
+    }
+    
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    /* Profile section */
+    .profile-section {
+        background: white;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        text-align: center;
+        margin-bottom: 2rem;
+        border: 3px solid var(--primary);
+    }
+    
+    .profile-img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 4px solid var(--accent);
+        margin: 0 auto;
+    }
+    
+    .profile-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-top: 0.5rem;
+    }
+    
+    .profile-motto {
+        font-size: 0.9rem;
+        color: #6b7280;
+        font-style: italic;
+        margin-top: 0.3rem;
+    }
+
+    /* Detective header */
+    .detective-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2.5rem;
+        border-radius: 20px;
+        text-align: center;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+        animation: fadeIn 0.8s ease-in;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .detective-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .detective-header p {
+        font-size: 1.1rem;
+        opacity: 0.95;
+    }
+
+    /* Case cards */
+    .case-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border-left: 5px solid var(--primary);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .case-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        border-left-width: 8px;
+    }
+
+    .case-card.locked {
+        border-left-color: var(--danger);
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+    
+    .case-card.locked:hover {
+        transform: none;
+    }
+
+    .case-card.unlocked {
+        border-left-color: var(--success);
+    }
+    
+    .case-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .case-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+    }
+    
+    .case-description {
+        font-size: 0.95rem;
+        color: #6b7280;
+        line-height: 1.6;
+    }
+
+    /* Hint box - Beautiful and concise */
+    .hint-box {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border-left: 4px solid var(--warning);
+        border-radius: 12px;
+        padding: 1rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 10px rgba(251, 191, 36, 0.2);
+    }
+    
+    .hint-content {
+        color: #92400e;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    .hint-header {
+        font-weight: 600;
+        color: #78350f;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+    /* Progress indicators */
+    .progress-badge {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin: 0.3rem;
+    }
+    
+    .progress-complete {
+        background: #d1fae5;
+        color: #065f46;
+    }
+    
+    .progress-pending {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    /* Buttons */
+    .stButton > button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        border-radius: 12px !important;
+        padding: 0.75rem 2rem !important;
+        font-weight: 600 !important;
+        border: none !important;
+        transition: all 0.3s !important;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
+    }
+
+    .stButton > button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6) !important;
+    }
+    
+    /* Secondary buttons */
+    .stButton > button[kind="secondary"] {
+        background: white !important;
+        color: var(--primary) !important;
+        border: 2px solid var(--primary) !important;
+    }
+
+    /* Metrics */
+    .metric-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border-top: 4px solid var(--primary);
+    }
+    
+    .metric-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary);
+    }
+    
+    .metric-label {
+        font-size: 0.9rem;
+        color: #6b7280;
+        margin-top: 0.3rem;
+    }
+
+    /* Progress bar */
+    .stProgress > div > div > div {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+        border-radius: 10px !important;
+    }
+    
+    /* Question card */
+    .question-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    /* Analysis cards */
+    .analysis-card {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        border: 2px solid #bae6fd;
+    }
+    
+    .strength-item {
+        background: #d1fae5;
+        padding: 0.8rem;
+        border-radius: 10px;
+        margin: 0.5rem 0;
+        border-left: 4px solid var(--success);
+    }
+    
+    .weakness-item {
+        background: #fee2e2;
+        padding: 0.8rem;
+        border-radius: 10px;
+        margin: 0.5rem 0;
+        border-left: 4px solid var(--danger);
+    }
+    
+    .suspect-item {
+        background: #fef3c7;
+        padding: 0.8rem;
+        border-radius: 10px;
+        margin: 0.5rem 0;
+        border-left: 4px solid var(--warning);
+    }
+    
+    /* Rank badge */
+    .rank-badge {
+        display: inline-block;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 1rem;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+    
+    /* Radio buttons */
+    .stRadio > label {
+        background: white;
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 0.5rem 0;
+        border: 2px solid #e5e7eb;
+        transition: all 0.3s;
+    }
+    
+    .stRadio > label:hover {
+        border-color: var(--primary);
+        background: #f0f9ff;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -110,7 +352,9 @@ def initialize_session_state():
         'basic_completed': False,
         'intermediate_completed': False,
         'advanced_completed': False,
-        'gemini_model': None
+        'gemini_model': None,
+        'username': 'Markat',
+        'user_photo': 'default.jpg'
     }
 
     for key, value in defaults.items():
@@ -122,35 +366,178 @@ def initialize_session_state():
         try:
             st.session_state['gemini_model'] = setup_vertex_ai()
         except Exception as e:
-            st.error(f"Failed to initialize AI model: {e}. Hints will be unavailable.")
+            st.error(f"AI Detective unavailable: {e}")
+
+def show_profile_section():
+    """Show user profile section"""
+    st.markdown(f"""
+    <div class="profile-section">
+        <div class="profile-name">🕵️ Detective {st.session_state['username']}</div>
+        <div class="profile-motto">💪 Use your strengths to overcome your weaknesses</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+def get_smart_hint_from_gemini():
+    """Generate intelligent hint based on user's previous performance"""
+    if st.session_state['gemini_model'] is None:
+        return "🤖 AI Detective is taking a coffee break!"
+
+    questions = get_current_questions()
+    if not questions or st.session_state['current_question_index'] >= len(questions):
+        return "🤔 No question to hint at right now!"
+
+    current_question = questions[st.session_state['current_question_index']]
+    responses = st.session_state['responses']
+    
+    # Analyze previous correct answers
+    correct_responses = [r for r in responses if r['is_correct']]
+    
+    # Find similar topics from previous correct answers
+    similar_topics = []
+    current_topic = current_question.get('topic', '')
+    
+    for response in correct_responses:
+        prev_topic = response.get('topic', '')
+        # Simple similarity check
+        if any(word in current_topic.lower() for word in prev_topic.lower().split()):
+            similar_topics.append({
+                'question_id': response['question_id'],
+                'topic': prev_topic
+            })
+    
+    # Build context for Gemini
+    hint_context = f"""You're a friendly AI detective helping a 10th grader who's a bit nervous about exams.
+
+Current Question: {current_question['question']}
+Topic: {current_question.get('topic', 'Math')}
+
+"""
+
+    if similar_topics:
+        hint_context += f"\n✨ They solved similar questions before: {', '.join([f'Q{s['question_id']}' for s in similar_topics[:2]])}"
+    
+    if correct_responses:
+        strong_topics = {}
+        for r in correct_responses:
+            topic = r.get('topic', 'unknown')
+            strong_topics[topic] = strong_topics.get(topic, 0) + 1
+        best_topic = max(strong_topics, key=strong_topics.get)
+        hint_context += f"\n💪 Their strength: {best_topic}"
+
+    prompt = f"""{hint_context}
+
+Give a SHORT, FRIENDLY hint (2-3 sentences max) using emojis that:
+1. Reminds them of a similar question they solved correctly (if any)
+2. Connects their strength to this problem
+3. Encourages without revealing the answer
+
+Keep it casual, teen-friendly, and motivating! No bullet points, just natural chat."""
+
+    try:
+        response = st.session_state['gemini_model'].generate_content(prompt)
+        return response.text.strip()
+    except Exception as e:
+        return f"🤖 Oops! Detective AI is having technical difficulties: {str(e)}"
+
+def show_intermediate_break_page():
+    """Show break page after intermediate completion"""
+    st.markdown("""
+    <div class="detective-header">
+        <h1>🎯 Evidence Analyzed!</h1>
+        <p>You've mastered the intermediate level! Ready for the final case?</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    show_profile_section()
+
+    # Intermediate performance
+    inter_responses = [r for r in st.session_state['responses'] if r['difficulty'] == 'intermediate']
+    if inter_responses:
+        inter_correct = sum(1 for r in inter_responses if r['is_correct'])
+        inter_accuracy = inter_correct / len(inter_responses)
+
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-value">{len(inter_responses)}</div>
+                <div class="metric-label">🎯 Evidence Analyzed</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with col2:
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-value">{inter_accuracy*100:.0f}%</div>
+                <div class="metric-label">📊 Accuracy Rate</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with col3:
+            avg_time = sum(r['time_spent'] for r in inter_responses) / len(inter_responses)
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-value">{avg_time:.0f}s</div>
+                <div class="metric-label">⏱️ Avg Time</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("⏸️ Take a Break", use_container_width=True):
+            st.info("💤 Rest up, detective! The final case will be waiting.")
+            if st.button("🏠 Return Home"):
+                st.session_state['current_page'] = 'home'
+                st.rerun()
+    
+    with col2:
+        if st.button("🚨 Crack the Final Case!", type="primary", use_container_width=True):
+            st.session_state['current_page'] = 'advanced'
+            st.session_state['current_question_index'] = 0
+            st.rerun()
 
 def show_basic_break_page():
     """Show break/rest page after basic completion"""
     st.markdown("""
     <div class="detective-header">
-        <h1>🕶️ Investigation Break</h1>
-        <p>You've completed the Basic level! Take a moment to rest or continue your investigation.</p>
+        <h1>🕵️ Investigation Checkpoint</h1>
+        <p>Basic clues gathered! Take a breather or dive deeper into the case.</p>
     </div>
     """, unsafe_allow_html=True)
 
-    # Show basic level stats and recommendations
+    show_profile_section()
+
+    # Basic level stats
     basic_responses = [r for r in st.session_state['responses'] if r['difficulty'] == 'basic']
     if basic_responses:
         basic_correct = sum(1 for r in basic_responses if r['is_correct'])
-        basic_accuracy = basic_correct / len(basic_responses) if basic_responses else 0
-
-        st.subheader("📊 Basic Level Performance")
+        basic_accuracy = basic_correct / len(basic_responses)
 
         col1, col2, col3 = st.columns(3)
         with col1:
-            st.metric("Questions Completed", f"{len(basic_responses)}")
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-value">{len(basic_responses)}</div>
+                <div class="metric-label">🔍 Clues Found</div>
+            </div>
+            """, unsafe_allow_html=True)
         with col2:
-            st.metric("Accuracy", f"{basic_accuracy*100:.1f}%")
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-value">{basic_accuracy*100:.0f}%</div>
+                <div class="metric-label">🎯 Success Rate</div>
+            </div>
+            """, unsafe_allow_html=True)
         with col3:
             avg_time = sum(r['time_spent'] for r in basic_responses) / len(basic_responses)
-            st.metric("Avg Time", f"{avg_time:.1f}s")
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-value">{avg_time:.0f}s</div>
+                <div class="metric-label">⚡ Speed</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-        # Analyze basic level topics
+        # Quick analysis
         topics = {}
         for r in basic_responses:
             topic = r['topic']
@@ -158,68 +545,49 @@ def show_basic_break_page():
                 topics[topic] = []
             topics[topic].append(r['is_correct'])
 
-        st.subheader("🔍 Basic Level Analysis")
-
         col1, col2 = st.columns(2)
-
+        
         with col1:
-            st.markdown("**💪 Strengths:**")
+            st.markdown('<div class="analysis-card">', unsafe_allow_html=True)
+            st.markdown("**💪 Your Strengths:**")
             for topic, results in topics.items():
                 accuracy = sum(results) / len(results)
                 if accuracy >= 0.7:
-                    st.markdown(f"✅ {topic}: {accuracy*100:.1f}%")
+                    st.markdown(f'<div class="strength-item">✅ {topic} - {accuracy*100:.0f}%</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
 
         with col2:
-            st.markdown("**🎯 Weaknesses:**")
+            st.markdown('<div class="analysis-card">', unsafe_allow_html=True)
+            st.markdown("**🎯 Need Practice:**")
             for topic, results in topics.items():
                 accuracy = sum(results) / len(results)
-                if accuracy <= 0.5:
-                    st.markdown(f"⚠️ {topic}: {accuracy*100:.1f}%")
+                if accuracy < 0.7:
+                    st.markdown(f'<div class="weakness-item">⚠️ {topic} - {accuracy*100:.0f}%</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
 
-        # Recommendations
-        if all(sum(results) / len(results) >= 0.7 for results in topics.values()):
-            st.success("Excellent work on the basics! You're ready for the next level.")
-        else:
-            st.info("Review the topics you struggled with before continuing.")
+    st.markdown("---")
 
-    # Action buttons
     col1, col2 = st.columns(2)
-
     with col1:
-        if st.button("⏸️ Take a Break", type="secondary", use_container_width=True):
-            st.info("Take your time! Come back when you're ready.")
-            if st.button("Return to Home", key="break_home"):
-                st.session_state['current_page'] = 'home'
-                st.rerun()
-
+        if st.button("⏸️ Take a Break", use_container_width=True):
+            st.info("💤 Recharge your detective skills! Come back when ready.")
+    
     with col2:
         if st.button("▶️ Continue to Intermediate", type="primary", use_container_width=True):
             st.session_state['current_page'] = 'intermediate'
             st.session_state['current_question_index'] = 0
             st.rerun()
 
-# Main app
-def main():
-    initialize_session_state()
-
-    # Page routing
-    if st.session_state['current_page'] == 'home':
-        show_home_page()
-    elif st.session_state['current_page'] == 'case_briefing':
-        show_case_briefing_page()
-    elif st.session_state['current_page'] == 'basic_break':
-        show_basic_break_page()
-    elif st.session_state['current_page'] in ['basic', 'intermediate', 'advanced']:
-        show_quiz_page()
-    elif st.session_state['current_page'] == 'results':
-        show_results_page()
-
-# Placeholder functions to be implemented
+# Main app functions
 def load_chapters():
     """Load chapter structure from 1.json"""
-    with open('1.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    return data['chapters']
+    try:
+        with open('1.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return data['chapters']
+    except FileNotFoundError:
+        st.error("❌ Case files (1.json) not found!")
+        return {}
 
 def load_questions_data(chapter, subtopic_key):
     """Load questions for a subtopic"""
@@ -230,130 +598,133 @@ def load_questions_data(chapter, subtopic_key):
     chapters = load_chapters()
     if chapter in chapters and subtopic_key in chapters[chapter]['subtopics']:
         questions_file = chapters[chapter]['subtopics'][subtopic_key]['questions_file']
-        with open(questions_file, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        questions = data['questions']
-        st.session_state['questions_data'][cache_key] = questions
-        return questions
+        try:
+            with open(questions_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            questions = data['questions']
+            st.session_state['questions_data'][cache_key] = questions
+            return questions
+        except FileNotFoundError:
+            st.error(f"❌ Question file {questions_file} not found!")
+            return []
     return []
 
 def show_home_page():
-    # Try to display logo if available
-    try:
-        from PIL import Image
-        logo = Image.open('logo.png')
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            st.image(logo, width=200)
-    except:
-        pass  # Logo not found, continue without it
-
+    """Display home page with cases"""
     st.markdown("""
     <div class="detective-header">
-        <h1>� ClueToSolve</h1>
-        <p>A Gamified Learning Platform for Class 10 Math Students</p>
-        <p>🏆 Solve the clues and crack the case!</p>
+        <h1>🔍 ClueToSolve</h1>
+        <p>A Gamified Learning Journey for Fearless Detectives</p>
+        <p>💪 Use your strengths to overcome your weaknesses</p>
     </div>
     """, unsafe_allow_html=True)
+
+    show_profile_section()
 
     chapters = load_chapters()
 
     for chapter_name, chapter_data in chapters.items():
-        st.subheader(f"📚 {chapter_name}")
+        st.markdown(f"### 📚 {chapter_name}")
 
         cols = st.columns(2)
         for i, (subtopic_key, subtopic_data) in enumerate(chapter_data['subtopics'].items()):
             with cols[i % 2]:
                 description = subtopic_data['description']
-
-                # Check if unlocked (implement logic later)
-                is_unlocked = True  # Placeholder
-
-                classes = "case-card unlocked" if is_unlocked else "case-card locked"
-
+                
                 st.markdown(f"""
-                <div class="{classes}">
-                    <h4>🔍 {subtopic_key}</h4>
-                    <p>{description}</p>
+                <div class="case-card unlocked">
+                    <div class="case-icon">🔍</div>
+                    <div class="case-title">{subtopic_key}</div>
+                    <div class="case-description">{description}</div>
                 </div>
                 """, unsafe_allow_html=True)
 
-                if st.button(f"Investigate {subtopic_key}", key=f"{chapter_name}_{subtopic_key}"):
+                if st.button(f"🚨 Investigate {subtopic_key}", key=f"{chapter_name}_{subtopic_key}", use_container_width=True):
                     st.session_state['current_chapter'] = chapter_name
                     st.session_state['current_subtopic'] = subtopic_key
                     st.session_state['current_page'] = 'case_briefing'
+                    st.session_state['responses'] = []
+                    st.session_state['basic_completed'] = False
+                    st.session_state['intermediate_completed'] = False
+                    st.session_state['advanced_completed'] = False
                     st.rerun()
 
 def show_case_briefing_page():
+    """Show case briefing with mission details"""
     if not st.session_state['current_chapter'] or not st.session_state['current_subtopic']:
-        st.error("No case selected!")
-        if st.button("Back to Home"):
+        st.error("❌ No case selected!")
+        if st.button("🏠 Back to Home"):
             st.session_state['current_page'] = 'home'
             st.rerun()
         return
 
-    # Load advanced questions to show case file
     questions = load_questions_data(st.session_state['current_chapter'], st.session_state['current_subtopic'])
     advanced_questions = [q for q in questions if q['difficulty_level'] == 'advanced']
 
     if not advanced_questions:
-        st.error("No advanced case found!")
+        st.error("❌ No advanced case found!")
         return
 
-    case = advanced_questions[0]  # Assuming one advanced case per subtopic
+    case = advanced_questions[0]
     case_file = case.get('case_file', {})
 
-    st.markdown("""
+    st.markdown(f"""
     <div class="detective-header">
-        <h1>🚨 {case.get('case_title', 'Case File')}</h1>
-        <p>Case #{case.get('case_number', 'Unknown')}</p>
+        <h1>{case.get('case_title', '🚨 Mystery Case')}</h1>
+        <p>{case.get('case_number', 'Case #Unknown')}</p>
     </div>
     """, unsafe_allow_html=True)
 
-    # Case file display
-    st.subheader("📄 Case Briefing")
+    show_profile_section()
+
+    # Case briefing
+    st.markdown("### 📄 Case Briefing")
     st.info(case_file.get('briefing', 'No briefing available.'))
 
-    st.subheader("🏛️ Crime Scene")
-    st.write(case_file.get('crime_scene', 'No scene description.'))
+    st.markdown("### 🏛️ Crime Scene")
+    st.warning(case_file.get('crime_scene', 'No scene description.'))
 
-    if 'evidence_found' in case_file and case_file['evidence_found']:
-        st.subheader("🧪 Evidence Found")
+    if 'evidence_found' in case_file:
+        st.markdown("### 🧪 Evidence Found")
         evidence = case_file['evidence_found']
         for key, value in evidence.items():
-            st.write(f"**{key.replace('_', ' ').title()}:** {value}")
+            st.markdown(f"**{key.replace('_', ' ').title()}:** {value}")
 
     if 'mystery' in case_file:
-        st.subheader("❓ The Mystery")
-        st.warning(case_file['mystery'])
+        st.markdown("### ❓ The Mystery")
+        st.error(case_file['mystery'])
 
-    # Always show Start Journey button
-    st.subheader("🎯 Your Mission")
-    st.info("Follow the detective's progression: Start with Basic clues, then Intermediate evidence, and finally solve the Advanced case!")
+    # Mission status
+    st.markdown("### 🎯 Investigation Progress")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        status = "✅ Complete" if st.session_state['basic_completed'] else "🔒 Locked"
+        badge_class = "progress-complete" if st.session_state['basic_completed'] else "progress-pending"
+        st.markdown(f'<span class="progress-badge {badge_class}">🔍 Basic Clues {status}</span>', unsafe_allow_html=True)
+    
+    with col2:
+        status = "✅ Complete" if st.session_state['intermediate_completed'] else "🔒 Locked"
+        badge_class = "progress-complete" if st.session_state['intermediate_completed'] else "progress-pending"
+        st.markdown(f'<span class="progress-badge {badge_class}">🔎 Evidence {status}</span>', unsafe_allow_html=True)
+    
+    with col3:
+        status = "✅ Complete" if st.session_state['advanced_completed'] else "🔒 Locked"
+        badge_class = "progress-complete" if st.session_state['advanced_completed'] else "progress-pending"
+        st.markdown(f'<span class="progress-badge {badge_class}">🚨 Final Case {status}</span>', unsafe_allow_html=True)
+
+    st.markdown("---")
 
     col1, col2 = st.columns(2)
     with col1:
-        if st.session_state['basic_completed'] and st.session_state['intermediate_completed']:
-            st.success("✅ Clues gathered! Evidence analyzed! Ready to crack the case!")
-        else:
-            if not st.session_state['basic_completed']:
-                st.info("🔍 Gather Clues: Not completed")
-            else:
-                st.success("🔍 Gather Clues: Completed!")
-
-            if not st.session_state['intermediate_completed']:
-                st.info("🔎 Analyze Evidence: Not completed")
-            else:
-                st.success("🔎 Analyze Evidence: Completed!")
-
-    with col2:
-        if st.button("🚀 Start Journey", type="primary", use_container_width=True):
-            # Start basic questions
+        if st.button("🚀 Start Investigation", type="primary", use_container_width=True):
             st.session_state['current_difficulty'] = 'basic'
             st.session_state['current_question_index'] = 0
             st.session_state['current_page'] = 'basic'
             st.rerun()
 
+    with col2:
         if st.button("🏠 Back to Headquarters", use_container_width=True):
             st.session_state['current_page'] = 'home'
             st.rerun()
@@ -363,114 +734,17 @@ def get_current_questions():
     questions = load_questions_data(st.session_state['current_chapter'], st.session_state['current_subtopic'])
     return [q for q in questions if q['difficulty_level'] == st.session_state['current_difficulty']]
 
-def calculate_accuracy(responses, difficulty):
-    """Calculate accuracy for a difficulty level"""
-    relevant_responses = [r for r in responses if r['difficulty'] == difficulty]
-    if not relevant_responses:
-        return 0.0
-    correct = sum(1 for r in relevant_responses if r['is_correct'])
-    return correct / len(relevant_responses) if relevant_responses else 0.0
-
-def get_hint_from_gemini():
-    """Generate a hint using Gemini AI"""
-    if st.session_state['gemini_model'] is None:
-        return "AI hints are unavailable. Please check your configuration."
-
-    questions = get_current_questions()
-    if not questions or st.session_state['current_question_index'] >= len(questions):
-        return "No question available for hint."
-
-    current_question = questions[st.session_state['current_question_index']]
-
-    # Prepare performance data - analyze all responses across all levels
-    responses = st.session_state['responses']
-    topic = current_question.get('topic', 'unknown')
-
-    # Calculate overall strengths and weaknesses across all completed questions
-    all_topics = set()
-    for response in responses:
-        all_topics.add(response.get('topic', 'unknown'))
-
-    strengths = []
-    weaknesses = []
-
-    for t in all_topics:
-        topic_responses = [r for r in responses if r['topic'] == t]
-        if topic_responses:
-            accuracy = sum(1 for r in topic_responses if r['is_correct']) / len(topic_responses)
-            if accuracy >= 0.7:
-                strengths.append(f"{t} ({accuracy*100:.0f}% accuracy)")
-            elif accuracy <= 0.5:
-                weaknesses.append(f"{t} ({accuracy*100:.0f}% accuracy)")
-
-    # Analyze time patterns
-    recent_responses = responses[-5:] if len(responses) >= 5 else responses
-    avg_time_recent = sum(r['time_spent'] for r in recent_responses) / len(recent_responses) if recent_responses else 0
-    current_difficulty = st.session_state['current_difficulty']
-
-    time_analysis = ""
-    if avg_time_recent > 300:  # More than 5 minutes per question
-        time_analysis = "Student is taking longer on recent questions, possibly indicating difficulty."
-    elif avg_time_recent < 60:  # Less than 1 minute
-        time_analysis = "Student is working quickly, showing confidence or rushing."
-
-    prompt = f"""
-    You are an AI Detective helping a Class 10 student solve math problems.
-
-    Student Profile:
-    - Current level: {current_difficulty.title()}
-    - Current topic: {topic}
-    - Strengths (topics with 70%+ accuracy): {', '.join(strengths) if strengths else 'Still developing'}
-    - Weaknesses (topics with 50%- accuracy): {', '.join(weaknesses) if weaknesses else 'None identified yet'}
-    - Time pattern: {time_analysis}
-
-    Question: "{current_question['question']}"
-
-    Based on their strengths, suggest an approach that leverages what they know well. If this is a weak area, suggest building on their strengths. Provide 2-3 helpful sentences that guide without giving away the answer.
-    """
-
-    try:
-        response = st.session_state['gemini_model'].generate_content(prompt)
-        return response.text.strip()
-    except Exception as e:
-        return f"Failed to generate hint: {str(e)}"
-
-def get_explanation_from_gemini(question):
-    """Generate a detailed explanation using Gemini AI"""
-    if st.session_state['gemini_model'] is None:
-        return "AI explanations are unavailable. Please check your configuration."
-
-    try:
-        prompt = f"""
-        You are a helpful math tutor. Provide a detailed, step-by-step explanation for this question.
-
-        Question: {question['question']}
-        Options: {', '.join([f"{k}: {v}" for k, v in question['options'].items()])}
-        Correct Answer: {question['answer']['correct_option']} - {question['options'][question['answer']['correct_option']]}
-
-        Steps from the answer:
-        {json.dumps(question['answer']['steps'], indent=2)}
-
-        Explanation: {question['answer']['explanation']}
-
-        Provide a comprehensive explanation that helps the student understand the concept, not just the answer.
-        """
-
-        response = st.session_state['gemini_model'].generate_content(prompt)
-        return response.text.strip()
-    except Exception as e:
-        return f"Failed to generate explanation: {str(e)}"
-
 def show_quiz_page():
+    """Enhanced quiz page with smart hints"""
     questions = get_current_questions()
     if not questions:
-        st.error("No questions found for this difficulty level!")
-        if st.button("Back to Case Brief"):
+        st.error("❌ No questions found!")
+        if st.button("🔙 Back"):
             st.session_state['current_page'] = 'case_briefing'
             st.rerun()
         return
 
-    # Header based on difficulty
+    difficulty = st.session_state['current_difficulty']
     headers = {
         'basic': "🔍 Gathering Clues",
         'intermediate': "🔎 Analyzing Evidence",
@@ -479,48 +753,40 @@ def show_quiz_page():
 
     st.markdown(f"""
     <div class="detective-header">
-        <h1>{headers[st.session_state['current_difficulty']]}</h1>
+        <h1>{headers[difficulty]}</h1>
         <p>Question {st.session_state['current_question_index'] + 1} of {len(questions)}</p>
     </div>
     """, unsafe_allow_html=True)
+
+    show_profile_section()
 
     # Progress bar
     progress = (st.session_state['current_question_index'] + 1) / len(questions)
     st.progress(progress)
 
-    # Current question
     if st.session_state['current_question_index'] < len(questions):
         question = questions[st.session_state['current_question_index']]
 
-        # Track question start time
         if st.session_state['question_start_time'] is None:
             st.session_state['question_start_time'] = time.time()
 
-        st.subheader(f"Question {st.session_state['current_question_index'] + 1}")
+        st.markdown('<div class="question-card">', unsafe_allow_html=True)
+        st.markdown(f"### Question {st.session_state['current_question_index'] + 1}")
         st.write(question['question'])
 
-        # Options
+        # Handle options
         raw_options = question['options']
-
-        # Handle both dictionary and array formats for options
         if isinstance(raw_options, dict):
             options = raw_options
             option_keys = list(options.keys())
         elif isinstance(raw_options, list):
-            # Convert array to dictionary format
-            options = {
-                "A": raw_options[0] if len(raw_options) > 0 else "",
-                "B": raw_options[1] if len(raw_options) > 1 else "",
-                "C": raw_options[2] if len(raw_options) > 2 else "",
-                "D": raw_options[3] if len(raw_options) > 3 else ""
-            }
-            option_keys = ["A", "B", "C", "D"]
+            options = {chr(65+i): raw_options[i] for i in range(len(raw_options))}
+            option_keys = list(options.keys())
         else:
-            # Fallback
             options = {"A": "Option A", "B": "Option B", "C": "Option C", "D": "Option D"}
             option_keys = ["A", "B", "C", "D"]
 
-        # Check if this question has already been answered
+        # Check if answered
         has_answered = False
         answer_is_correct = False
         for r in st.session_state['responses']:
@@ -529,77 +795,66 @@ def show_quiz_page():
                 answer_is_correct = r['is_correct']
                 break
 
-        # If not answered yet, show selection interface
         if not has_answered:
-            # Radio buttons for answer
             selected_label = st.radio(
                 "Choose your answer:",
                 option_keys,
+                format_func=lambda x: f"{x}. {options[x]}",
                 key=f"q_{question['id']}"
             )
 
-            # Submit button
-            submit_disabled = selected_label is None
-            if st.button("✅ Submit Answer", type="primary", disabled=submit_disabled, use_container_width=True):
+            if st.button("✅ Submit Answer", type="primary", use_container_width=True):
                 if selected_label:
                     save_answer(question, selected_label, options[selected_label])
                     st.rerun()
 
-        # If answered, show result and explanation
         else:
-            # Show selected answer
+            # Show result
             selected_text = ""
             for r in st.session_state['responses']:
                 if r['question_id'] == question['id']:
-                    selected_text = f"{r['selected_option']}: {r['selected_text']}"
+                    selected_text = f"{r['selected_option']}. {r['selected_text']}"
                     break
 
             st.info(f"**Your Answer:** {selected_text}")
 
-            # Show result message
             if answer_is_correct:
-                st.success("🎉 Excellent detective work! You got it right!")
+                st.success("🎉 Brilliant detective work! Case clue secured!")
             else:
                 correct_answer = ""
                 try:
                     if question.get('answer'):
                         correct_option = question['answer'].get('correct_option', '')
                         if isinstance(raw_options, dict):
-                            correct_answer = f"{correct_option}: {raw_options.get(correct_option, 'Unknown')}"
-                        else:
-                            # Handle array format
-                            if isinstance(raw_options, list):
-                                index = ord(correct_option.upper()) - ord('A')
-                                if 0 <= index < len(raw_options):
-                                    correct_answer = f"{correct_option}: {raw_options[index]}"
-                            else:
-                                correct_answer = correct_option
+                            correct_answer = f"{correct_option}. {raw_options.get(correct_option, 'Unknown')}"
+                        elif isinstance(raw_options, list):
+                            index = ord(correct_option.upper()) - ord('A')
+                            if 0 <= index < len(raw_options):
+                                correct_answer = f"{correct_option}. {raw_options[index]}"
                 except:
-                    correct_answer = "Unable to determine correct answer"
+                    correct_answer = "Unable to determine"
 
-                st.error(f"❌ Oops detective! You missed this part.\n\n**Correct Answer:** {correct_answer}")
+                st.error(f"❌ Not quite, detective!\n\n**Correct Answer:** {correct_answer}")
 
-            # Show explanation from JSON
+            # Show explanation
             try:
                 if question.get('answer') and question['answer'].get('explanation'):
-                    st.subheader("📚 Explanation")
+                    st.markdown("### 📚 Explanation")
                     st.write(question['answer']['explanation'])
 
                     if question['answer'].get('steps'):
-                        st.subheader("🔢 Solution Steps")
+                        st.markdown("### 🔢 Solution Steps")
                         steps = question['answer']['steps']
                         if isinstance(steps, dict):
                             for step_key, step_text in steps.items():
-                                st.write(f"**{step_key.replace('_', ' ').title()}:** {step_text}")
-                        else:
-                            st.write(steps)
+                                st.markdown(f"**{step_key.replace('_', ' ').title()}:** {step_text}")
             except:
-                st.info("Answer explanation will be shown below.")
+                pass
 
-            st.markdown("---")
+            st.markdown('</div>', unsafe_allow_html=True)
 
-            # Navigation buttons (after answer is shown)
-            col1, col2, col3 = st.columns([1, 1, 3])
+            # Navigation
+            col1, col2, col3 = st.columns([1, 1, 2])
 
             with col1:
                 if st.session_state['current_question_index'] > 0:
@@ -610,13 +865,12 @@ def show_quiz_page():
 
             with col2:
                 next_label = "Next ➡️" if st.session_state['current_question_index'] < len(questions) - 1 else "Finish 🎯"
-                if st.button(next_label, key="next"):
+                if st.button(next_label, key="next", type="primary"):
                     if st.session_state['current_question_index'] < len(questions) - 1:
                         st.session_state['current_question_index'] += 1
                         st.session_state['question_start_time'] = None
                         st.rerun()
                     else:
-                        # Completed difficulty level
                         complete_difficulty_level()
                         st.rerun()
 
@@ -625,48 +879,36 @@ def show_quiz_page():
                     st.session_state['current_page'] = 'case_briefing'
                     st.rerun()
 
-        # Gemini witness in sidebar - Show after answering any question in current difficulty
-        answered_questions = len([r for r in st.session_state['responses'] if r['difficulty'] == st.session_state['current_difficulty']])
-        if answered_questions > 0:  # Show only after answering at least one question
-            with st.sidebar:
-                st.subheader("🤖 AI Detective")
+        # Smart Gemini hints - ONLY in intermediate level, ONLY after answering at least one question
+        if difficulty == 'intermediate':
+            answered_in_intermediate = len([r for r in st.session_state['responses'] 
+                                           if r['difficulty'] == 'intermediate'])
+            
+            if answered_in_intermediate > 0 and not has_answered:
+                st.markdown("---")
+                st.markdown("### 🤖 Need a Detective Hint?")
+                
+                if st.button("💡 Get Smart Hint", key="get_hint"):
+                    with st.spinner("🔍 Analyzing your investigation history..."):
+                        hint = get_smart_hint_from_gemini()
+                    
+                    st.markdown(f"""
+                    <div class="hint-box">
+                        <div class="hint-header">💡 Detective AI says:</div>
+                        <div class="hint-content">{hint}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
-                # Create a form-like interface for hint type selection
-                hint_type_placeholder = st.empty()
-                hint_type = hint_type_placeholder.radio(
-                    "What would you like help with?",
-                    ["Hint (subtle guidance)", "Explanation (detailed answer)", "Cancel"],
-                    key="hint_type_radio"
-                )
-
-                if st.button("🚨 Consult Witness", key="consult_witness"):
-                    if hint_type == "Cancel":
-                        st.info("Consultation cancelled. Good luck!")
-                    else:
-                        with st.spinner("Consulting the witness..."):
-                            if hint_type == "Hint (subtle guidance)":
-                                hint_response = get_hint_from_gemini()
-                            else:  # Explanation
-                                hint_response = get_explanation_from_gemini(question)
-                        st.markdown(f'<div class="hint-box">**Witness Says:** {hint_response}</div>', unsafe_allow_html=True)
-
-                # Clear the radio selection after use (optional)
-                if st.button("Clear Selection", key="clear_hint"):
-                    st.rerun()
 def save_answer(question, selected_label, selected_text):
     """Save answer to session state"""
     question_id = question['id']
 
-    # Safely get correct answer
-    correct_answer = 'Unknown'
+    correct_answer = 'A'
     try:
         if question.get('answer') and question['answer'].get('correct_option'):
             correct_answer = question['answer']['correct_option']
-        else:
-            # Try to infer correct answer from some other source or default
-            correct_answer = 'A'  # Default fallback
     except:
-        correct_answer = 'A'  # Fallback if anything goes wrong
+        pass
 
     is_correct = selected_label == correct_answer
     time_spent = time.time() - st.session_state['question_start_time']
@@ -682,7 +924,7 @@ def save_answer(question, selected_label, selected_text):
         'time_spent': time_spent
     }
 
-    # Update or add response
+    # Update or add
     for i, r in enumerate(st.session_state['responses']):
         if r['question_id'] == question_id:
             st.session_state['responses'][i] = response
@@ -692,276 +934,289 @@ def save_answer(question, selected_label, selected_text):
 
 def complete_difficulty_level():
     """Handle completion of a difficulty level"""
-    questions = get_current_questions()
-    answered_questions_in_level = len([r for r in st.session_state['responses']
-                                       if r.get('difficulty') == st.session_state['current_difficulty']])
-
-    # Check if all questions in this level are answered
-    if answered_questions_in_level < len(questions):
-        # Not all questions completed, stay on current level
-        return
-
-    # All questions in this level are complete
     difficulty = st.session_state['current_difficulty']
 
     if difficulty == 'basic':
         st.session_state['basic_completed'] = True
-        # After basic completion, show the break page before intermediate
         st.session_state['current_page'] = 'basic_break'
     elif difficulty == 'intermediate':
         st.session_state['intermediate_completed'] = True
-        st.session_state['current_difficulty'] = 'advanced'
-        st.session_state['current_question_index'] = 0
-        st.session_state['current_page'] = 'advanced'
+        st.session_state['current_page'] = 'intermediate_break'
     elif difficulty == 'advanced':
         st.session_state['advanced_completed'] = True
         st.session_state['current_page'] = 'results'
 
-def calculate_overall_stats():
-    """Calculate overall performance statistics"""
-    responses = st.session_state['responses']
-
-    if not responses:
-        return {
-            'total_questions': 0,
-            'total_correct': 0,
-            'accuracy': 0,
-            'avg_time': 0,
-            'detective_rank': 'Rookie',
-            'rank_color': '#6b7280',
-            'strengths': [],
-            'weaknesses': [],
-            'red_herrings': []
-        }
-
-    total_questions = len(responses)
-    total_correct = sum(1 for r in responses if r['is_correct'])
-    accuracy = total_correct / total_questions if total_questions > 0 else 0
-    avg_time = sum(r['time_spent'] for r in responses) / total_questions if total_questions > 0 else 0
-
-    # Determine rank
-    if accuracy >= 0.9:
-        rank = 'Master Detective'
-        rank_color = '#ffd700'  # Gold
-    elif accuracy >= 0.8:
-        rank = 'Expert Investigator'
-        rank_color = '#c0c0c0'  # Silver
-    elif accuracy >= 0.7:
-        rank = 'Senior Detective'
-        rank_color = '#cd7f32'  # Bronze
-    elif accuracy >= 0.6:
-        rank = 'Detective'
-        rank_color = '#1e3a8a'
-    else:
-        rank = 'Apprentice Detective'
-        rank_color = '#6b7280'
-
-    # Analyze topic performance
-    topics = {}
-    for r in responses:
-        topic = r['topic']
-        if topic not in topics:
-            topics[topic] = []
-        topics[topic].append(r['is_correct'])
-
-    strengths = []
-    weaknesses = []
-    red_herrings = []
-
-    for topic, results in topics.items():
-        topic_accuracy = sum(results) / len(results)
-        if topic_accuracy >= 0.7:
-            strengths.append((topic, topic_accuracy))
-        elif topic_accuracy <= 0.5:
-            weaknesses.append((topic, topic_accuracy))
-
-    # Red herrings: common mistakes (simplified version)
-    mistake_patterns = {}
-    for r in responses:
-        if not r['is_correct']:
-            key = f"{r['topic']}_{r['selected_option']}_{r['correct_option']}"
-            mistake_patterns[key] = mistake_patterns.get(key, 0) + 1
-
-    # Get top red herrings
-    sorted_mistakes = sorted(mistake_patterns.items(), key=lambda x: x[1], reverse=True)[:3]
-    for pattern, count in sorted_mistakes:
-        if count > 1:  # Only if mistake repeated
-            topic, wrong, correct = pattern.split('_', 2)
-            red_herrings.append(f"Common mistake in {topic}: choosing {wrong} instead of {correct}")
-
-    return {
-        'total_questions': total_questions,
-        'total_correct': total_correct,
-        'accuracy': accuracy,
-        'avg_time': avg_time,
-        'detective_rank': rank,
-        'rank_color': rank_color,
-        'strengths': strengths,
-        'weaknesses': weaknesses,
-        'red_herrings': red_herrings
-    }
+def calculate_accuracy(responses, difficulty):
+    """Calculate accuracy for a difficulty level"""
+    relevant = [r for r in responses if r['difficulty'] == difficulty]
+    if not relevant:
+        return 0.0
+    correct = sum(1 for r in relevant if r['is_correct'])
+    return correct / len(relevant)
 
 def show_results_page():
+    """Beautiful results page with analysis"""
     st.markdown("""
     <div class="detective-header">
-        <h1>🎉 Case Closed!</h1>
-        <p>Your investigation is complete. Here's your performance report.</p>
+        <h1>🎉 Case Solved!</h1>
+        <p>Your investigation report is ready, Detective!</p>
     </div>
     """, unsafe_allow_html=True)
 
-    stats = calculate_overall_stats()
+    show_profile_section()
 
-    # Rank badge
-    st.markdown("""
+    responses = st.session_state['responses']
+    
+    if not responses:
+        st.warning("No responses recorded!")
+        return
+
+    total_correct = sum(1 for r in responses if r['is_correct'])
+    total_questions = len(responses)
+    accuracy = total_correct / total_questions
+    avg_time = sum(r['time_spent'] for r in responses) / total_questions
+
+    # Detective Rank
+    if accuracy >= 0.9:
+        rank = "🥇 Master Detective"
+        rank_color = "#ffd700"
+    elif accuracy >= 0.8:
+        rank = "🥈 Expert Investigator"
+        rank_color = "#c0c0c0"
+    elif accuracy >= 0.7:
+        rank = "🥉 Senior Detective"
+        rank_color = "#cd7f32"
+    elif accuracy >= 0.6:
+        rank = "🎖️ Detective"
+        rank_color = "#1e3a8a"
+    else:
+        rank = "🔰 Apprentice Detective"
+        rank_color = "#6b7280"
+
+    st.markdown(f"""
     <div style="text-align: center; margin: 2rem 0;">
-        <h2 style="color: {stats['rank_color']}; font-size: 2.5rem;">{stats['detective_rank']}</h2>
-        <p>🏆 Congratulations!</p>
+        <div class="rank-badge" style="background: {rank_color}; color: white;">
+            {rank}
+        </div>
     </div>
-    """.format(stats=stats), unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
-    # Stats cards
+    # Stats
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
-        st.metric("Total Solved", f"{stats['total_correct']}/{stats['total_questions']}")
+        st.markdown(f"""
+        <div class="metric-card">
+            <div class="metric-value">{total_correct}/{total_questions}</div>
+            <div class="metric-label">✅ Cases Solved</div>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col2:
-        st.metric("Accuracy", f"{stats['accuracy']*100:.1f}%")
+        st.markdown(f"""
+        <div class="metric-card">
+            <div class="metric-value">{accuracy*100:.0f}%</div>
+            <div class="metric-label">🎯 Accuracy</div>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col3:
-        st.metric("Avg Time", f"{stats['avg_time']:.1f}s")
+        st.markdown(f"""
+        <div class="metric-card">
+            <div class="metric-value">{avg_time:.0f}s</div>
+            <div class="metric-label">⏱️ Avg Time</div>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col4:
-        # Calculate streak (simplified)
-        responses = st.session_state['responses']
         streak = 0
         for r in reversed(responses):
             if r['is_correct']:
                 streak += 1
             else:
                 break
-        st.metric("Current Streak", streak)
+        st.markdown(f"""
+        <div class="metric-card">
+            <div class="metric-value">{streak}</div>
+            <div class="metric-label">🔥 Current Streak</div>
+        </div>
+        """, unsafe_allow_html=True)
 
-    # Progress bars for difficulty levels
-    st.subheader("📈 Progress by Difficulty")
+    st.markdown("---")
 
-    basic_acc = calculate_accuracy(st.session_state['responses'], 'basic')
-    inter_acc = calculate_accuracy(st.session_state['responses'], 'intermediate')
-    adv_acc = calculate_accuracy(st.session_state['responses'], 'advanced')
+    # Analysis by topic
+    topics = {}
+    for r in responses:
+        topic = r['topic']
+        if topic not in topics:
+            topics[topic] = {'correct': 0, 'total': 0}
+        topics[topic]['total'] += 1
+        if r['is_correct']:
+            topics[topic]['correct'] += 1
 
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.progress(basic_acc)
-        st.write(f"🔍 Basic: {basic_acc*100:.1f}%")
-
-    with col2:
-        st.progress(inter_acc)
-        st.write(f"🔎 Intermediate: {inter_acc*100:.1f}%")
-
-    with col3:
-        st.progress(adv_acc)
-        st.write(f"🚨 Advanced: {adv_acc*100:.1f}%")
-
-    # Strengths and Weaknesses
     col1, col2 = st.columns(2)
 
     with col1:
-        st.subheader("💪 Strengths")
-        if stats['strengths']:
-            for topic, acc in stats['strengths']:
-                st.markdown(f"✅ **{topic}**: {acc*100:.1f}% accuracy")
-        else:
-            st.info("Keep solving cases to build strengths!")
+        st.markdown("### 💪 Your Strengths")
+        st.markdown('<div class="analysis-card">', unsafe_allow_html=True)
+        strengths_found = False
+        for topic, stats in topics.items():
+            acc = stats['correct'] / stats['total']
+            if acc >= 0.7:
+                strengths_found = True
+                st.markdown(f'<div class="strength-item">✅ {topic} - {acc*100:.0f}% ({stats["correct"]}/{stats["total"]})</div>', unsafe_allow_html=True)
+        if not strengths_found:
+            st.info("Keep solving to build your strengths!")
+        st.markdown('</div>', unsafe_allow_html=True)
 
     with col2:
-        st.subheader("🎯 Weaknesses")
-        if stats['weaknesses']:
-            for topic, acc in stats['weaknesses']:
-                st.markdown(f"⚠️ **{topic}**: {acc*100:.1f}% accuracy")
-        else:
-            st.success("Great! No major weaknesses detected!")
+        st.markdown("### 🎯 Needs Practice")
+        st.markdown('<div class="analysis-card">', unsafe_allow_html=True)
+        weaknesses_found = False
+        for topic, stats in topics.items():
+            acc = stats['correct'] / stats['total']
+            if acc < 0.7:
+                weaknesses_found = True
+                st.markdown(f'<div class="weakness-item">⚠️ {topic} - {acc*100:.0f}% ({stats["correct"]}/{stats["total"]})</div>', unsafe_allow_html=True)
+        if not weaknesses_found:
+            st.success("🌟 No weaknesses! You're a star!")
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    # Red Herrings
-    if stats['red_herrings']:
-        st.subheader("🚩 Red Herrings")
-        for herring in stats['red_herrings']:
-            st.warning(herring)
+    # Red Herrings (Common Confusion Points)
+    st.markdown("### 🚩 Red Herrings (Common Confusion Points)")
+    st.markdown('<div class="analysis-card">', unsafe_allow_html=True)
+    
+    mistake_patterns = {}
+    for r in responses:
+        if not r['is_correct']:
+            key = f"{r['topic']}"
+            mistake_patterns[key] = mistake_patterns.get(key, 0) + 1
 
-    # Charts
-    responses = st.session_state['responses']
-    if responses:
-        st.subheader("📊 Performance Analytics")
+    if mistake_patterns:
+        sorted_mistakes = sorted(mistake_patterns.items(), key=lambda x: x[1], reverse=True)[:3]
+        for topic, count in sorted_mistakes:
+            st.markdown(f'<div class="suspect-item">🔍 Review {topic} - {count} mistake(s) here</div>', unsafe_allow_html=True)
+    else:
+        st.success("🎯 No confusion detected! Perfect clarity!")
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
-        # Data preparation
+    # Performance chart
+    if len(responses) > 1:
+        st.markdown("### 📊 Investigation Timeline")
         df = pd.DataFrame(responses)
-
-        # Time spent by difficulty
-        fig_time = px.scatter(df, x='difficulty', y='time_spent',
-                             color='is_correct',
-                             color_discrete_map={True: '#10b981', False: '#ef4444'},
-                             title="Time Spent vs Difficulty")
-        fig_time.update_layout(xaxis_title="Difficulty", yaxis_title="Time (seconds)")
-        st.plotly_chart(fig_time, use_container_width=True)
-
-        # Accuracy by topic
-        if 'topic' in df.columns:
-            topic_stats = df.groupby('topic').agg({
-                'is_correct': ['sum', 'count', lambda x: x.sum()/x.count()]
-            }).round(3)
-
-            fig_accuracy = go.Figure()
-            topics = topic_stats.index
-            accuracies = topic_stats[('is_correct', '<lambda_0>')] * 100
-
-            fig_accuracy.add_trace(go.Bar(
-                x=topics,
-                y=accuracies,
-                marker_color='#1e3a8a'
-            ))
-
-            fig_accuracy.update_layout(
-                title="Accuracy by Topic",
-                xaxis_title="Topic",
-                yaxis_title="Accuracy (%)"
-            )
-            st.plotly_chart(fig_accuracy, use_container_width=True)
+        df['question_num'] = range(1, len(df) + 1)
+        df['result'] = df['is_correct'].apply(lambda x: 'Correct ✅' if x else 'Incorrect ❌')
+        
+        fig = px.scatter(df, x='question_num', y='time_spent', 
+                        color='result',
+                        color_discrete_map={'Correct ✅': '#10b981', 'Incorrect ❌': '#ef4444'},
+                        title="Time Spent per Question",
+                        labels={'question_num': 'Question Number', 'time_spent': 'Time (seconds)'})
+        st.plotly_chart(fig, use_container_width=True)
 
     # Recommendations
-    st.subheader("🎯 Practice Recommendations")
-    if stats['weaknesses']:
-        weak_topics = [topic for topic, _ in stats['weaknesses']]
-        st.info(f"Focus on these topics: {', '.join(weak_topics)}")
-    else:
-        st.success("Excellent work! Keep up the great solving!")
+    st.markdown("### 🎯 Detective Recommendations")
+    
+    # Load all questions to recommend next case
+    questions = load_questions_data(st.session_state['current_chapter'], st.session_state['current_subtopic'])
+    advanced_questions = [q for q in questions if q['difficulty_level'] == 'advanced']
+    
+    # Check if there are more advanced cases
+    solved_case_ids = [r['question_id'] for r in responses if r['difficulty'] == 'advanced']
+    unsolved_advanced = [q for q in advanced_questions if q['id'] not in solved_case_ids]
+    
+    if unsolved_advanced:
+        st.markdown("### 🚨 Recommended Next Case")
+        next_case = unsolved_advanced[0]
+        st.markdown(f"""
+        <div class="case-card unlocked">
+            <div class="case-title">{next_case.get('case_title', 'Mystery Case')}</div>
+            <div class="case-description">{next_case.get('case_number', '')}</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🚨 Solve This Case", type="primary", use_container_width=True):
+            # Reset to advanced level
+            st.session_state['current_difficulty'] = 'advanced'
+            st.session_state['current_question_index'] = advanced_questions.index(next_case)
+            st.session_state['current_page'] = 'advanced'
+            st.rerun()
 
-    # Navigation
+    # Recommend other crime scenes (other subtopics)
+    st.markdown("### 🔍 Explore Other Crime Scenes")
+    chapters = load_chapters()
+    current_chapter = st.session_state['current_chapter']
+    current_subtopic = st.session_state['current_subtopic']
+    
+    if current_chapter in chapters:
+        other_subtopics = [s for s in chapters[current_chapter]['subtopics'].keys() if s != current_subtopic]
+        
+        if other_subtopics:
+            cols = st.columns(len(other_subtopics))
+            for i, subtopic in enumerate(other_subtopics):
+                with cols[i]:
+                    subtopic_data = chapters[current_chapter]['subtopics'][subtopic]
+                    st.markdown(f"""
+                    <div class="case-card unlocked">
+                        <div class="case-icon">🔍</div>
+                        <div class="case-title">{subtopic}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    if st.button(f"Investigate {subtopic[:15]}...", key=f"rec_{subtopic}"):
+                        st.session_state['current_subtopic'] = subtopic
+                        st.session_state['current_page'] = 'case_briefing'
+                        st.session_state['responses'] = []
+                        st.session_state['basic_completed'] = False
+                        st.session_state['intermediate_completed'] = False
+                        st.session_state['advanced_completed'] = False
+                        st.rerun()
+
+    st.markdown("---")
+
+    # Action buttons
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("🔄 Solve Another Case"):
-            # Reset session state for new case
+        if st.button("🏠 Return to Headquarters", use_container_width=True):
             st.session_state['current_page'] = 'home'
             st.session_state['current_chapter'] = None
             st.session_state['current_subtopic'] = None
-            st.session_state['current_difficulty'] = 'basic'
-            st.session_state['current_question_index'] = 0
             st.session_state['responses'] = []
-            st.session_state['question_start_time'] = None
             st.session_state['basic_completed'] = False
             st.session_state['intermediate_completed'] = False
             st.session_state['advanced_completed'] = False
             st.rerun()
 
     with col2:
-        if st.button("📋 Review Answers"):
-            st.subheader("📋 Answer Review")
-            # Show review of answers
-            for i, response in enumerate(responses, 1):
-                with st.expander(f"Question {i}: {'✅' if response['is_correct'] else '❌'}"):
-                    st.write(f"**Your answer:** {response['selected_text']}")
-                    st.write(f"**Correct answer:** {response['correct_option']}")
-                    st.write(f"**Time spent:** {response['time_spent']:.1f}s")
+        if st.button("📋 Review All Answers", use_container_width=True):
+            st.markdown("### 📋 Complete Answer Review")
+            for i, r in enumerate(responses, 1):
+                status = "✅" if r['is_correct'] else "❌"
+                with st.expander(f"Question {i}: {status} {r['topic']}"):
+                    st.write(f"**Your answer:** {r['selected_option']}. {r['selected_text']}")
+                    st.write(f"**Correct answer:** {r['correct_option']}")
+                    st.write(f"**Time spent:** {r['time_spent']:.1f}s")
+                    st.write(f"**Result:** {'Correct!' if r['is_correct'] else 'Incorrect'}")
+
+# Main app routing
+def main():
+    initialize_session_state()
+
+    if st.session_state['current_page'] == 'home':
+        show_home_page()
+    elif st.session_state['current_page'] == 'case_briefing':
+        show_case_briefing_page()
+    elif st.session_state['current_page'] == 'basic_break':
+        show_basic_break_page()
+    elif st.session_state['current_page'] == 'intermediate_break':
+        show_intermediate_break_page()
+    elif st.session_state['current_page'] in ['basic', 'intermediate', 'advanced']:
+        show_quiz_page()
+    elif st.session_state['current_page'] == 'results':
+        show_results_page()
 
 if __name__ == "__main__":
     main()
+
