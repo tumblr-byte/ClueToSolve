@@ -923,7 +923,7 @@ def show_quiz_page():
                     """, unsafe_allow_html=True)
 
 def get_gemini_analysis(responses, topics):
-    """Get SPECIFIC AI analysis - identifies exact patterns and confusions"""
+    """Get DEEP PATTERN AI analysis - identifies concepts, formulas, and connections"""
     if st.session_state['gemini_model'] is None:
         return {
             'strengths': ["Keep solving to discover your strengths! 🌟"],
@@ -931,53 +931,58 @@ def get_gemini_analysis(responses, topics):
             'red_herrings': ["No patterns detected yet! 🔍"]
         }
     
-    # Build detailed analysis data
-    correct_questions = []
-    incorrect_questions = []
-    
+    # Get ALL question details from responses
+    questions_data = []
     for r in responses:
-        if r['is_correct']:
-            correct_questions.append(f"Q{r['question_id']} ({r['topic']})")
-        else:
-            incorrect_questions.append(f"Q{r['question_id']} ({r['topic']}) - chose {r['selected_option']} not {r['correct_option']}")
+        questions_data.append({
+            'id': r['question_id'],
+            'topic': r['topic'],
+            'correct': r['is_correct'],
+            'selected': r['selected_option'],
+            'correct_answer': r['correct_option']
+        })
     
-    # Group similar mistakes
-    topic_mistakes = {}
-    for r in responses:
-        if not r['is_correct']:
-            topic = r['topic']
-            if topic not in topic_mistakes:
-                topic_mistakes[topic] = []
-            topic_mistakes[topic].append(r['question_id'])
+    # Build detailed prompt with actual question data
+    correct_list = [q for q in questions_data if q['correct']]
+    incorrect_list = [q for q in questions_data if not q['correct']]
     
-    prompt = f"""You're analyzing a 10th grader's math test. Be SPECIFIC with question numbers and patterns.
+    prompt = f"""You're a math teacher analyzing a 10th grader's test. Find PATTERNS in their understanding.
 
-✅ CORRECT ANSWERS:
-{chr(10).join(correct_questions) if correct_questions else "None yet"}
+✅ CORRECT ANSWERS ({len(correct_list)}):
+{chr(10).join([f"Q{q['id']}: {q['topic']}" for q in correct_list]) if correct_list else "None yet"}
 
-❌ INCORRECT ANSWERS:
-{chr(10).join(incorrect_questions) if incorrect_questions else "None yet"}
+❌ WRONG ANSWERS ({len(incorrect_list)}):
+{chr(10).join([f"Q{q['id']}: {q['topic']}" for q in incorrect_list]) if incorrect_list else "None yet"}
 
-🔍 REPEATED MISTAKES:
-{chr(10).join([f"{topic}: Q{', Q'.join(map(str, q_ids))}" for topic, q_ids in topic_mistakes.items() if len(q_ids) >= 2]) if topic_mistakes else "None"}
+YOUR JOB: Find CONCEPTS and PATTERNS, not just question numbers.
 
-Write 3 sections with SHORT bullet points (use emojis):
+Write 3 sections (max 3 bullets each, keep SHORT):
 
-STRENGTHS:
-• List SPECIFIC topics/concepts they got right (mention Q numbers)
-• Max 3 bullets
+STRENGTHS: (What concepts/formulas they UNDERSTAND)
+• Don't just say "Q1-Q3 correct" 
+• Say "You understand SAS theorem - use it as your weapon! ✅"
+• Focus on CONCEPTS they mastered (like "Pythagorean theorem", "ratio formulas", "angle properties")
+• Be specific about WHICH concept
 
-PRACTICE:
-• Point out EXACT question numbers that are similar (e.g., "Q5 and Q7 both test ratios")
-• Show patterns they missed
-• Max 3 bullets
+PRACTICE: (What concepts are UNCLEAR)
+• If Q5 and Q8 both wrong and similar topic, say "Topic X is not clear yet - review formula Y"
+• Don't say "you chose wrong answer"
+• Say "Your understanding of [concept] needs work - focus on [specific formula/rule]"
+• Connect similar mistakes: "Q5 and Q8 both test [concept] - practice this!"
 
-RED_HERRINGS:
-• Identify SPECIFIC confusions (like "SAS vs SSS", "complementary vs supplementary")
-• Explain what they're mixing up in ONE simple sentence
-• Max 3 bullets
+RED_HERRINGS: (What they're CONFUSING or MIXING UP)
+• Identify exact confusions like "SAS vs SSS" or "sin vs cos"
+• Say WHAT formula/rule they're mixing up
+• Give ONE clear tip to fix it
+• Example: "You're confusing complementary (adds to 90°) with supplementary (adds to 180°) - remember: C=90, S=180! 🎯"
 
-Keep each bullet 1 line. Use simple 10th-grade language."""
+Rules:
+- NO "you chose option A" - we don't care about options
+- Focus on MATH CONCEPTS, FORMULAS, RULES
+- Be specific: "Pythagorean theorem" not "triangles"
+- Max 3 bullets per section
+- One line per bullet
+- Use emojis"""
 
     try:
         response = st.session_state['gemini_model'].generate_content(prompt)
@@ -993,33 +998,40 @@ Keep each bullet 1 line. Use simple 10th-grade language."""
         
         for line in text.split('\n'):
             line = line.strip()
-            if 'STRENGTHS:' in line.upper():
+            
+            # Detect sections
+            if 'STRENGTHS' in line.upper() and ':' in line:
                 current_section = 'strengths'
-            elif 'PRACTICE:' in line.upper():
+                continue
+            elif 'PRACTICE' in line.upper() and ':' in line:
                 current_section = 'weaknesses'
-            elif 'RED_HERRING' in line.upper() or 'RED HERRING' in line.upper():
+                continue
+            elif 'RED' in line.upper() and 'HERRING' in line.upper():
                 current_section = 'red_herrings'
-            elif line.startswith('•') or line.startswith('-') or line.startswith('*'):
-                if current_section:
+                continue
+            
+            # Extract bullets
+            if line.startswith('•') or line.startswith('-') or line.startswith('*'):
+                if current_section and len(result[current_section]) < 3:
                     clean_line = line.lstrip('•-*').strip()
-                    if clean_line and len(result[current_section]) < 3:  # Max 3 per section
+                    if clean_line:
                         result[current_section].append(clean_line)
         
-        # Fallback if parsing failed
-        if not any(result.values()):
-            result = {
-                'strengths': ["You're building skills! 🌟"],
-                'weaknesses': ["Focus on practice questions! 💪"],
-                'red_herrings': ["Watch for tricky patterns! 🔍"]
-            }
+        # Ensure we have something
+        if not result['strengths']:
+            result['strengths'] = ["Building detective skills! Keep going! 🌟"]
+        if not result['weaknesses']:
+            result['weaknesses'] = ["Practice makes perfect! 💪"]
+        if not result['red_herrings']:
+            result['red_herrings'] = ["No major confusions detected! 🎯"]
         
         return result
         
     except Exception as e:
         return {
-            'strengths': ["Great start! Keep going! 🌟"],
-            'weaknesses': ["Review tough questions! 💪"],
-            'red_herrings': ["Stay sharp for tricks! 🔍"]
+            'strengths': ["Great work on understanding concepts! 🌟"],
+            'weaknesses': ["Focus on reviewing formulas! 💪"],
+            'red_herrings': ["Watch for similar-looking concepts! 🔍"]
         }
 
 def calculate_accuracy(responses, difficulty):
