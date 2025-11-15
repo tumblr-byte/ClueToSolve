@@ -468,9 +468,19 @@ def load_questions_data(chapter, subtopic_key):
     return []
 
 def get_current_questions():
-    """Get questions for current difficulty level"""
+    """Get questions for current difficulty level - REDUCED for hackathon"""
     questions = load_questions_data(st.session_state['current_chapter'], st.session_state['current_subtopic'])
-    return [q for q in questions if q['difficulty_level'] == st.session_state['current_difficulty']]
+    filtered = [q for q in questions if q['difficulty_level'] == st.session_state['current_difficulty']]
+    
+    # LIMIT questions per level for hackathon
+    if st.session_state['current_difficulty'] == 'basic':
+        return filtered[:4]  # Only 4 basic questions
+    elif st.session_state['current_difficulty'] == 'intermediate':
+        return filtered[:3]  # Only 3 intermediate questions
+    else:  # advanced
+        return filtered[:1]  # Only 1 advanced case
+    
+    return filtered
 
 def show_home_page():
     """Display home page with cases"""
@@ -913,82 +923,103 @@ def show_quiz_page():
                     """, unsafe_allow_html=True)
 
 def get_gemini_analysis(responses, topics):
-    """Get AI analysis of strengths, weaknesses, and red herrings"""
+    """Get SPECIFIC AI analysis - identifies exact patterns and confusions"""
     if st.session_state['gemini_model'] is None:
         return {
-            'strengths_text': "Keep solving cases to discover your detective powers! 🌟",
-            'weaknesses_text': "Practice makes perfect! The more cases you solve, the stronger you'll become. 💪",
-            'red_herrings_text': "No tricky patterns yet - you're doing great! Keep investigating! 🔍"
+            'strengths': ["Keep solving to discover your strengths! 🌟"],
+            'weaknesses': ["Practice more to improve! 💪"],
+            'red_herrings': ["No patterns detected yet! 🔍"]
         }
     
-    # Prepare data for analysis
-    strengths = []
-    weaknesses = []
-    mistakes = {}
+    # Build detailed analysis data
+    correct_questions = []
+    incorrect_questions = []
     
-    for topic, stats in topics.items():
-        acc = stats['correct'] / stats['total']
-        if acc >= 0.7:
-            strengths.append(f"{topic} ({acc*100:.0f}%)")
-        elif acc < 0.7:
-            weaknesses.append(f"{topic} ({acc*100:.0f}%)")
+    for r in responses:
+        if r['is_correct']:
+            correct_questions.append(f"Q{r['question_id']} ({r['topic']})")
+        else:
+            incorrect_questions.append(f"Q{r['question_id']} ({r['topic']}) - chose {r['selected_option']} not {r['correct_option']}")
     
+    # Group similar mistakes
+    topic_mistakes = {}
     for r in responses:
         if not r['is_correct']:
             topic = r['topic']
-            mistakes[topic] = mistakes.get(topic, 0) + 1
+            if topic not in topic_mistakes:
+                topic_mistakes[topic] = []
+            topic_mistakes[topic].append(r['question_id'])
     
-    # Create prompts for Gemini
-    prompt = f"""You're a friendly detective mentor talking to a nervous 10th grader who just solved math problems.
+    prompt = f"""You're analyzing a 10th grader's math test. Be SPECIFIC with question numbers and patterns.
 
-Results:
-- Total questions: {len(responses)}
-- Correct: {sum(1 for r in responses if r['is_correct'])}
-- Topics where they did well (70%+): {', '.join(strengths) if strengths else 'Still building'}
-- Topics needing practice (<70%): {', '.join(weaknesses) if weaknesses else 'None'}
-- Common mistake areas: {', '.join([f"{k} ({v} mistakes)" for k, v in sorted(mistakes.items(), key=lambda x: x[1], reverse=True)[:3]]) if mistakes else 'None'}
+✅ CORRECT ANSWERS:
+{chr(10).join(correct_questions) if correct_questions else "None yet"}
 
-Write THREE SHORT sections (2-3 sentences each, use emojis, be encouraging):
+❌ INCORRECT ANSWERS:
+{chr(10).join(incorrect_questions) if incorrect_questions else "None yet"}
 
-1. STRENGTHS: Celebrate what they're good at in a fun way
-2. PRACTICE AREAS: Gently suggest what to work on, connect to their strengths
-3. RED HERRINGS: Explain confusing patterns they fell for (if any) in simple terms
+🔍 REPEATED MISTAKES:
+{chr(10).join([f"{topic}: Q{', Q'.join(map(str, q_ids))}" for topic, q_ids in topic_mistakes.items() if len(q_ids) >= 2]) if topic_mistakes else "None"}
 
-Keep it super friendly, use simple words, and make them feel good! Format as:
-STRENGTHS: [text]
-PRACTICE: [text]
-RED_HERRINGS: [text]"""
+Write 3 sections with SHORT bullet points (use emojis):
+
+STRENGTHS:
+• List SPECIFIC topics/concepts they got right (mention Q numbers)
+• Max 3 bullets
+
+PRACTICE:
+• Point out EXACT question numbers that are similar (e.g., "Q5 and Q7 both test ratios")
+• Show patterns they missed
+• Max 3 bullets
+
+RED_HERRINGS:
+• Identify SPECIFIC confusions (like "SAS vs SSS", "complementary vs supplementary")
+• Explain what they're mixing up in ONE simple sentence
+• Max 3 bullets
+
+Keep each bullet 1 line. Use simple 10th-grade language."""
 
     try:
         response = st.session_state['gemini_model'].generate_content(prompt)
         text = response.text.strip()
         
-        # Parse response
         result = {
-            'strengths_text': "Great detective work! 🌟",
-            'weaknesses_text': "Keep practicing! 💪",
-            'red_herrings_text': "Stay alert for tricky clues! 🔍"
+            'strengths': [],
+            'weaknesses': [],
+            'red_herrings': []
         }
         
-        if "STRENGTHS:" in text:
-            strengths_part = text.split("STRENGTHS:")[1].split("PRACTICE:")[0].strip()
-            result['strengths_text'] = strengths_part
+        current_section = None
         
-        if "PRACTICE:" in text:
-            practice_part = text.split("PRACTICE:")[1].split("RED_HERRINGS:")[0].strip()
-            result['weaknesses_text'] = practice_part
+        for line in text.split('\n'):
+            line = line.strip()
+            if 'STRENGTHS:' in line.upper():
+                current_section = 'strengths'
+            elif 'PRACTICE:' in line.upper():
+                current_section = 'weaknesses'
+            elif 'RED_HERRING' in line.upper() or 'RED HERRING' in line.upper():
+                current_section = 'red_herrings'
+            elif line.startswith('•') or line.startswith('-') or line.startswith('*'):
+                if current_section:
+                    clean_line = line.lstrip('•-*').strip()
+                    if clean_line and len(result[current_section]) < 3:  # Max 3 per section
+                        result[current_section].append(clean_line)
         
-        if "RED_HERRINGS:" in text:
-            red_part = text.split("RED_HERRINGS:")[1].strip()
-            result['red_herrings_text'] = red_part
+        # Fallback if parsing failed
+        if not any(result.values()):
+            result = {
+                'strengths': ["You're building skills! 🌟"],
+                'weaknesses': ["Focus on practice questions! 💪"],
+                'red_herrings': ["Watch for tricky patterns! 🔍"]
+            }
         
         return result
         
     except Exception as e:
         return {
-            'strengths_text': "You're building your detective skills! Every case makes you stronger! 🌟",
-            'weaknesses_text': "Practice the tough topics - even the best detectives need training! 💪",
-            'red_herrings_text': "Watch out for tricky questions - they're testing your sharp mind! 🔍"
+            'strengths': ["Great start! Keep going! 🌟"],
+            'weaknesses': ["Review tough questions! 💪"],
+            'red_herrings': ["Stay sharp for tricks! 🔍"]
         }
 
 def calculate_accuracy(responses, difficulty):
@@ -1120,16 +1151,12 @@ def show_results_page():
         st.markdown("### 💪 Your Strengths")
         st.markdown('<div class="analysis-card">', unsafe_allow_html=True)
         
-        # Show AI analysis
-        st.markdown(f'<div class="strength-item">{ai_analysis["strengths_text"]}</div>', unsafe_allow_html=True)
-        
-        # Show data
-        strengths_found = False
-        for topic, stats in topics.items():
-            acc = stats['correct'] / stats['total']
-            if acc >= 0.7:
-                strengths_found = True
-                st.markdown(f'<div class="strength-item">✅ {topic}: {acc*100:.0f}% ({stats["correct"]}/{stats["total"]})</div>', unsafe_allow_html=True)
+        # Show AI bullet points
+        if ai_analysis['strengths']:
+            for point in ai_analysis['strengths']:
+                st.markdown(f'<div class="strength-item">• {point}</div>', unsafe_allow_html=True)
+        else:
+            st.markdown('<div class="strength-item">Keep investigating to discover your powers! 🌟</div>', unsafe_allow_html=True)
         
         st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1137,16 +1164,12 @@ def show_results_page():
         st.markdown("### 🎯 Practice These")
         st.markdown('<div class="analysis-card">', unsafe_allow_html=True)
         
-        # Show AI analysis
-        st.markdown(f'<div class="weakness-item">{ai_analysis["weaknesses_text"]}</div>', unsafe_allow_html=True)
-        
-        # Show data
-        weaknesses_found = False
-        for topic, stats in topics.items():
-            acc = stats['correct'] / stats['total']
-            if acc < 0.7:
-                weaknesses_found = True
-                st.markdown(f'<div class="weakness-item">⚠️ {topic}: {acc*100:.0f}% ({stats["correct"]}/{stats["total"]})</div>', unsafe_allow_html=True)
+        # Show AI bullet points
+        if ai_analysis['weaknesses']:
+            for point in ai_analysis['weaknesses']:
+                st.markdown(f'<div class="weakness-item">• {point}</div>', unsafe_allow_html=True)
+        else:
+            st.markdown('<div class="weakness-item">No weak spots! You\'re doing great! 💪</div>', unsafe_allow_html=True)
         
         st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1154,20 +1177,12 @@ def show_results_page():
     st.markdown("### 🚩 Red Herrings (Confusion Points)")
     st.markdown('<div class="analysis-card">', unsafe_allow_html=True)
     
-    # Show AI analysis first
-    st.markdown(f'<div class="suspect-item">{ai_analysis["red_herrings_text"]}</div>', unsafe_allow_html=True)
-    
-    # Show data
-    mistake_patterns = {}
-    for r in responses:
-        if not r['is_correct']:
-            key = f"{r['topic']}"
-            mistake_patterns[key] = mistake_patterns.get(key, 0) + 1
-
-    if mistake_patterns:
-        sorted_mistakes = sorted(mistake_patterns.items(), key=lambda x: x[1], reverse=True)[:3]
-        for topic, count in sorted_mistakes:
-            st.markdown(f'<div class="suspect-item">🔍 {topic}: {count} mistake(s) - Review this topic!</div>', unsafe_allow_html=True)
+    # Show AI bullet points
+    if ai_analysis['red_herrings']:
+        for point in ai_analysis['red_herrings']:
+            st.markdown(f'<div class="suspect-item">• {point}</div>', unsafe_allow_html=True)
+    else:
+        st.markdown('<div class="suspect-item">No tricky patterns detected! 🎯</div>', unsafe_allow_html=True)
     
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1300,4 +1315,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
