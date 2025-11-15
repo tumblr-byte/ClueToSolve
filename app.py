@@ -9,8 +9,8 @@ from gemini import setup_vertex_ai
 
 # Page configuration
 st.set_page_config(
-    page_title="Math Detective",
-    page_icon="🕵️",
+    page_title="ClueToSolve",
+    page_icon="🔍",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -124,6 +124,80 @@ def initialize_session_state():
         except Exception as e:
             st.error(f"Failed to initialize AI model: {e}. Hints will be unavailable.")
 
+def show_basic_break_page():
+    """Show break/rest page after basic completion"""
+    st.markdown("""
+    <div class="detective-header">
+        <h1>🕶️ Investigation Break</h1>
+        <p>You've completed the Basic level! Take a moment to rest or continue your investigation.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Show basic level stats and recommendations
+    basic_responses = [r for r in st.session_state['responses'] if r['difficulty'] == 'basic']
+    if basic_responses:
+        basic_correct = sum(1 for r in basic_responses if r['is_correct'])
+        basic_accuracy = basic_correct / len(basic_responses) if basic_responses else 0
+
+        st.subheader("📊 Basic Level Performance")
+
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Questions Completed", f"{len(basic_responses)}")
+        with col2:
+            st.metric("Accuracy", f"{basic_accuracy*100:.1f}%")
+        with col3:
+            avg_time = sum(r['time_spent'] for r in basic_responses) / len(basic_responses)
+            st.metric("Avg Time", f"{avg_time:.1f}s")
+
+        # Analyze basic level topics
+        topics = {}
+        for r in basic_responses:
+            topic = r['topic']
+            if topic not in topics:
+                topics[topic] = []
+            topics[topic].append(r['is_correct'])
+
+        st.subheader("🔍 Basic Level Analysis")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.markdown("**💪 Strengths:**")
+            for topic, results in topics.items():
+                accuracy = sum(results) / len(results)
+                if accuracy >= 0.7:
+                    st.markdown(f"✅ {topic}: {accuracy*100:.1f}%")
+
+        with col2:
+            st.markdown("**🎯 Weaknesses:**")
+            for topic, results in topics.items():
+                accuracy = sum(results) / len(results)
+                if accuracy <= 0.5:
+                    st.markdown(f"⚠️ {topic}: {accuracy*100:.1f}%")
+
+        # Recommendations
+        if all(sum(results) / len(results) >= 0.7 for results in topics.values()):
+            st.success("Excellent work on the basics! You're ready for the next level.")
+        else:
+            st.info("Review the topics you struggled with before continuing.")
+
+    # Action buttons
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("⏸️ Take a Break", type="secondary", use_container_width=True):
+            st.info("Take your time! Come back when you're ready.")
+            if st.button("Return to Home", key="break_home"):
+                st.session_state['current_page'] = 'home'
+                st.rerun()
+
+    with col2:
+        if st.button("▶️ Continue to Intermediate", type="primary", use_container_width=True):
+            st.session_state['current_page'] = 'intermediate'
+            st.session_state['current_question_index'] = 0
+            st.rerun()
+
 # Main app
 def main():
     initialize_session_state()
@@ -133,6 +207,8 @@ def main():
         show_home_page()
     elif st.session_state['current_page'] == 'case_briefing':
         show_case_briefing_page()
+    elif st.session_state['current_page'] == 'basic_break':
+        show_basic_break_page()
     elif st.session_state['current_page'] in ['basic', 'intermediate', 'advanced']:
         show_quiz_page()
     elif st.session_state['current_page'] == 'results':
@@ -162,11 +238,21 @@ def load_questions_data(chapter, subtopic_key):
     return []
 
 def show_home_page():
+    # Try to display logo if available
+    try:
+        from PIL import Image
+        logo = Image.open('logo.png')
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            st.image(logo, width=200)
+    except:
+        pass  # Logo not found, continue without it
+
     st.markdown("""
     <div class="detective-header">
-        <h1>🕵️ Math Detective</h1>
+        <h1>� ClueToSolve</h1>
         <p>A Gamified Learning Platform for Class 10 Math Students</p>
-        <p>🏆 Solve the clues and crank the case!</p>
+        <p>🏆 Solve the clues and crack the case!</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -241,30 +327,34 @@ def show_case_briefing_page():
         st.subheader("❓ The Mystery")
         st.warning(case_file['mystery'])
 
-    if st.session_state['basic_completed'] and st.session_state['intermediate_completed']:
-        st.success("✅ Clues gathered! Evidence analyzed! Ready to crack the case!")
-        if st.button("🚀 Start Investigation", type="primary"):
-            # Start basic questions
-            st.session_state['current_difficulty'] = 'basic'  # Start with basic even for briefing
-            st.session_state['current_page'] = 'basic'
-            st.session_state['current_question_index'] = 0
-            st.rerun()
-    else:
-        st.error("🔒 Case locked! Solve the basic clues and analyze evidence first.")
+    # Always show Start Journey button
+    st.subheader("🎯 Your Mission")
+    st.info("Follow the detective's progression: Start with Basic clues, then Intermediate evidence, and finally solve the Advanced case!")
 
-        col1, col2 = st.columns(2)
-        with col1:
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.session_state['basic_completed'] and st.session_state['intermediate_completed']:
+            st.success("✅ Clues gathered! Evidence analyzed! Ready to crack the case!")
+        else:
             if not st.session_state['basic_completed']:
                 st.info("🔍 Gather Clues: Not completed")
             else:
                 st.success("🔍 Gather Clues: Completed!")
-        with col2:
+
             if not st.session_state['intermediate_completed']:
                 st.info("🔎 Analyze Evidence: Not completed")
             else:
                 st.success("🔎 Analyze Evidence: Completed!")
 
-        if st.button("🏠 Back to Headquarters"):
+    with col2:
+        if st.button("🚀 Start Journey", type="primary", use_container_width=True):
+            # Start basic questions
+            st.session_state['current_difficulty'] = 'basic'
+            st.session_state['current_question_index'] = 0
+            st.session_state['current_page'] = 'basic'
+            st.rerun()
+
+        if st.button("🏠 Back to Headquarters", use_container_width=True):
             st.session_state['current_page'] = 'home'
             st.rerun()
 
@@ -330,6 +420,32 @@ def get_hint_from_gemini():
         return response.text.strip()
     except Exception as e:
         return f"Failed to generate hint: {str(e)}"
+
+def get_explanation_from_gemini(question):
+    """Generate a detailed explanation using Gemini AI"""
+    if st.session_state['gemini_model'] is None:
+        return "AI explanations are unavailable. Please check your configuration."
+
+    try:
+        prompt = f"""
+        You are a helpful math tutor. Provide a detailed, step-by-step explanation for this question.
+
+        Question: {question['question']}
+        Options: {', '.join([f"{k}: {v}" for k, v in question['options'].items()])}
+        Correct Answer: {question['answer']['correct_option']} - {question['options'][question['answer']['correct_option']]}
+
+        Steps from the answer:
+        {json.dumps(question['answer']['steps'], indent=2)}
+
+        Explanation: {question['answer']['explanation']}
+
+        Provide a comprehensive explanation that helps the student understand the concept, not just the answer.
+        """
+
+        response = st.session_state['gemini_model'].generate_content(prompt)
+        return response.text.strip()
+    except Exception as e:
+        return f"Failed to generate explanation: {str(e)}"
 
 def show_quiz_page():
     questions = get_current_questions()
@@ -430,13 +546,32 @@ def show_quiz_page():
                 st.rerun()
 
         with col4:
-            # Gemini hint in sidebar
+            # Gemini witness in sidebar
             with st.sidebar:
-                st.subheader("🕵️ Ask Witness for Hint")
-                if st.button("💡 Get Hint", key="hint"):
-                    with st.spinner("Consulting the witness..."):
-                        hint = get_hint_from_gemini()
-                    st.markdown(f'<div class="hint-box">**Witness Says:** {hint}</div>', unsafe_allow_html=True)
+                st.subheader("🕵️ Ask Witness")
+
+                # Create a form-like interface for hint type selection
+                hint_type_placeholder = st.empty()
+                hint_type = hint_type_placeholder.radio(
+                    "What would you like help with?",
+                    ["Hint (subtle guidance)", "Explanation (detailed answer)", "Cancel"],
+                    key="hint_type_radio"
+                )
+
+                if st.button("🚨 Consult Witness", key="consult_witness"):
+                    if hint_type == "Cancel":
+                        st.info("Consultation cancelled. Good luck!")
+                    else:
+                        with st.spinner("Consulting the witness..."):
+                            if hint_type == "Hint (subtle guidance)":
+                                hint_response = get_hint_from_gemini()
+                            else:  # Explanation
+                                hint_response = get_explanation_from_gemini(question)
+                        st.markdown(f'<div class="hint-box">**Witness Says:** {hint_response}</div>', unsafe_allow_html=True)
+
+                # Clear the radio selection after use (optional)
+                if st.button("Clear Selection", key="clear_hint"):
+                    st.rerun()
 
                 # Quick stats
                 st.subheader("📊 Your Progress")
@@ -482,9 +617,8 @@ def complete_difficulty_level():
 
     if difficulty == 'basic':
         st.session_state['basic_completed'] = True
-        st.session_state['current_difficulty'] = 'intermediate'
-        st.session_state['current_question_index'] = 0
-        st.session_state['current_page'] = 'intermediate' if not st.session_state['intermediate_completed'] else 'advanced'
+        # After basic completion, show the break page before intermediate
+        st.session_state['current_page'] = 'basic_break'
     elif difficulty == 'intermediate':
         st.session_state['intermediate_completed'] = True
         st.session_state['current_difficulty'] = 'advanced'
