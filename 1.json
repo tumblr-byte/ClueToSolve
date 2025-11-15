@@ -1,0 +1,31 @@
+
+
+ 
+{
+  "chapters": {
+    "Triangle": {
+      "subtopics": { 
+        "Similarity Criterion": {
+          "description": "Learn how to prove triangles are similar using AA, SAS, and SSS criteria. Master proportional sides and corresponding angles to solve complex geometric problems.",
+          "questions_file": "triangle_similarity_questions.json"
+        },
+        "Converse of Basic Proportionality Theorem": {
+          "description": "Explore the relationship between parallel lines and proportional segments in triangles. Apply the theorem and its converse to find unknown lengths and prove geometric properties.",
+          "questions_file": "triangle_bpt_questions.json"
+        }
+      }     
+    },
+    "Trigonometry": {
+      "subtopics": {
+        "Trigonometric Identities": {
+          "description": "Master fundamental trigonometric identities including Pythagorean, reciprocal, and quotient identities. Learn to prove complex equations by transforming expressions step by step.",
+          "questions_file": "trigo_identities_questions.json"
+        },
+        "Trigonometry Applications - Heights & Distances": {
+          "description": "Apply trigonometry to real-world scenarios involving heights, distances, angles of elevation and depression. Solve problems related to buildings, mountains, rivers, and navigation.",
+          "questions_file": "trigo_applications_questions.json"
+        }
+      }
+    } 
+  }
+}

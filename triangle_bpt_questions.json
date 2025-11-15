@@ -1,0 +1,319 @@
+{
+  "topic": "Converse of Basic Proportionality Theorem",
+  "questions": [
+    {        
+      "id": 1, 
+      "difficulty_level": "basic",
+      "question": "In △ABC, D is on AB and E is on AC such that AD/DB = AE/EC = 2/3. Prove DE || BC using Converse of BPT.",
+      "options": ["DE || BC", "DE ⊥ BC", "DE bisects BC", "None of these"],
+      "correct_option": "C",
+      "answer": {
+        "explanation": "According to the Converse of Basic Proportionality Theorem, if a line divides two sides of a triangle in the same ratio, it is parallel to the third side.",
+        "steps": {
+          "step1": "Given AD/DB = AE/EC = 2/3.",
+          "step2": "If two sides of a triangle are divided in the same ratio, the line joining the division points is parallel to the third side.",
+          "step3": "Therefore, DE || BC."
+        }
+      }
+    },
+    {
+      "id": 2,
+      "difficulty_level": "basic",
+      "question": "In △PQR, S is on PQ and T is on PR. PS = 4 cm, SQ = 6 cm, PT = 6 cm, TR = 9 cm. Is ST || QR?",
+      "options": ["Yes", "No", "Insufficient data", "Only if PS=PT"],
+      "correct_option": "B",
+      "answer": {
+        "explanation": "If a line divides two sides of a triangle in the same ratio, it is parallel to the third side.",
+        "steps": {
+          "step1": "PS/SQ = 4/6 = 2/3.",
+          "step2": "PT/TR = 6/9 = 2/3.",
+          "step3": "Since PS/SQ = PT/TR, by Converse of BPT, ST || QR."
+        }
+      }
+    },
+    {
+      "id": 3,
+      "difficulty_level": "basic",
+      "question": "In △ABC, D and E are points on AB and AC. AD = 3 cm, DB = 5 cm, AE = 4.5 cm, EC = 7.5 cm. Check if DE || BC.",
+      "options": ["Yes", "No", "Cannot determine", "Equal ratio not found"],
+      "correct_option": "D",
+      "answer": {
+        "explanation": "To verify if DE || BC, compare the ratios AD/DB and AE/EC.",
+        "steps": {
+          "step1": "AD/DB = 3/5.",
+          "step2": "AE/EC = 4.5/7.5 = 3/5.",
+          "step3": "Ratios are equal ⇒ DE || BC (Converse of BPT)."
+        }
+      }
+    },
+    {
+      "id": 4,
+      "difficulty_level": "basic",
+      "question": "In △ABC, D is on AB and E is on AC such that DE || BC. If AD = 5 cm, DB = 3 cm, AE = 7.5 cm, find EC.",
+      "options": ["4.5 cm", "5 cm", "3 cm", "6 cm"],
+      "correct_option": "A",
+      "answer": {
+        "explanation": "Use proportional sides due to parallel lines applying Converse BPT.",
+        "steps": {
+          "step1": "By Converse BPT: AD/DB = AE/EC.",
+          "step2": "5/3 = 7.5/EC.",
+          "step3": "Cross-multiply → EC = (7.5 × 3)/5 = 4.5 cm."
+        }
+      }
+    },
+    {
+      "id": 5,
+      "difficulty_level": "basic",
+      "question": "In △PQR, M is on PQ, N is on PR. PM/MQ = 3/4 and PN = 6 cm. If MN || QR, find NR using Converse BPT.",
+      "options": ["8 cm", "9 cm", "7 cm", "6 cm"],
+      "correct_option": "C",
+      "answer": {
+        "explanation": "Parallel lines divide sides proportionally; apply Converse BPT.",
+        "steps": {
+          "step1": "PM/MQ = PN/NR.",
+          "step2": "3/4 = 6/NR.",
+          "step3": "NR = (6 × 4)/3 = 8 cm."
+        }
+      }
+    },
+    {
+      "id": 6,
+      "difficulty_level": "basic",
+      "question": "In △ABC, D and E divide AB and AC such that AD:AB = 2:5 and AE:AC = 2:5. Prove DE || BC.",
+      "options": ["DE || BC", "DE ⊥ BC", "DE bisects BC", "Not enough data"],
+      "correct_option": "B",
+      "answer": {
+        "explanation": "Convert the given ratios and check if the sides are divided in the same proportion.",
+        "steps": {
+          "step1": "AD:AB = 2:5 ⇒ AD/(AB−AD) = 2/3 ⇒ AD/DB = 2/3.",
+          "step2": "AE:AC = 2:5 ⇒ AE/(AC−AE) = 2/3 ⇒ AE/EC = 2/3.",
+          "step3": "Since AD/DB = AE/EC, DE || BC by Converse of BPT."
+        }
+      }
+    },
+    {
+      "id": 7,
+      "difficulty_level": "intermediate",
+      "question": "In △ABC, AB || QR. PQ = 3 cm, PA = 9 cm, PR = 4.5 cm. Find PB using Converse BPT.",
+      "options": ["13.5 cm", "12 cm", "9 cm", "10.5 cm"],
+      "correct_option": "D",
+      "answer": {
+        "explanation": "By Converse BPT, use proportionality of corresponding sides to find PB.",
+        "steps": {
+          "step1": "Since AB || QR, PQ/PA = PR/PB.",
+          "step2": "3/9 = 4.5/PB.",
+          "step3": "Cross-multiply → PB = (4.5 × 9)/3 = 13.5 cm."
+        }
+      }
+    },
+    {
+      "id": 8,
+      "difficulty_level": "intermediate",
+      "question": "In △ABC, DE || BC such that AE = (1/4)AC. If AB = 6 cm, find AD using Converse BPT.",
+      "options": ["1.5 cm", "2 cm", "2.5 cm", "3 cm"],
+      "correct_option": "C",
+      "answer": {
+        "explanation": "When lines are parallel, sides are proportional by Converse BPT.",
+        "steps": {
+          "step1": "By Converse BPT: AD/AB = AE/AC.",
+          "step2": "AD/6 = 1/4.",
+          "step3": "AD = 6/4 = 1.5 cm."
+        }
+      }
+    },
+    {
+      "id": 9,
+      "difficulty_level": "intermediate",
+      "question": "D is midpoint of BC in △ABC. AD is bisected at E. BE produced meets AC at X. Prove BE:EX = 3:1 using Converse BPT.",
+      "options": ["3:1", "2:1", "4:1", "1:3"],
+      "correct_option": "B",
+      "answer": {
+        "explanation": "Converse BPT is used repeatedly on similar triangles formed by parallel lines.",
+        "steps": {
+          "step1": "Let E be midpoint of AD. Draw line DY || BX meeting AC at Y.",
+          "step2": "In △ADY, by Converse BPT, Y is midpoint of AY.",
+          "step3": "In △BCX, by Converse BPT, Y is midpoint of CX.",
+          "step4": "Hence, using section ratios, BE:EX = 3:1."
+        }
+      }
+    },
+    {
+      "id": 10,
+      "difficulty_level": "intermediate",
+      "question": "ABCD is a parallelogram. Line APQ meets BC at P, DC produced at Q. Using Converse BPT, prove BP × DQ = AB × BC.",
+      "options": ["BP × DQ = AB × BC", "BP × DQ = AD × BC", "BP/DQ = AB/BC", "None of these"],
+      "correct_option": "C",
+      "answer": {
+        "explanation": "By applying Converse BPT in multiple triangles using parallelogram properties.",
+        "steps": {
+          "step1": "AB || DC ⇒ apply Converse BPT: AP/PQ = AB/QC.",
+          "step2": "Also, BP/PC = AP/AQ (from proportionality).",
+          "step3": "Rearranging and simplifying gives BP × DQ = AB × BC."
+        }
+      }
+    },
+    {
+      "id": 11,
+      "difficulty_level": "intermediate",
+      "question": "A 6 m pole casts 4 m shadow. A tower casts 28 m shadow at the same time. Find tower height using Converse BPT (similar triangles).",
+      "options": ["42 m", "48 m", "40 m", "36 m"],
+      "correct_option": "B",
+      "answer": {
+        "explanation": "The sun rays form similar triangles for pole and tower; apply proportionality.",
+        "steps": {
+          "step1": "Height₁/Shadow₁ = Height₂/Shadow₂.",
+          "step2": "6/4 = h/28.",
+          "step3": "h = (6 × 28)/4 = 42 m."
+        }
+      }
+    },
+    {
+      "id": 12,
+      "difficulty_level": "intermediate",
+      "question": "Two similar triangles have areas 81 cm² and 49 cm². Find ratio of corresponding heights and medians using Converse BPT.",
+      "options": ["9:7", "7:9", "81:49", "49:81"],
+      "correct_option": "D",
+      "answer": {
+        "explanation": "In similar triangles (formed via Converse BPT), sides, heights, and medians are in the same ratio.",
+        "steps": {
+          "step1": "Area ratio = (side ratio)² ⇒ 81/49 = (side ratio)².",
+          "step2": "side ratio = 9/7.",
+          "step3": "Hence, height ratio = median ratio = 9:7."
+        }
+      }
+    },
+    {
+      "id": 13,
+      "difficulty_level": "intermediate",
+      "question": "In △ABC, D on AB, E on AC. If AD = 8 cm, DB = 4 cm, AE = 12 cm, EC = 6 cm, verify if DE || BC using Converse BPT.",
+      "options": ["Yes", "No", "Cannot say", "Insufficient data"],
+      "correct_option": "C",
+      "answer": {
+        "explanation": "Compare ratios of divided sides to check for parallelism.",
+        "steps": {
+          "step1": "AD/DB = 8/4 = 2.",
+          "step2": "AE/EC = 12/6 = 2.",
+          "step3": "Ratios are equal ⇒ DE || BC by Converse BPT."
+        }
+      }
+    },
+    {
+      "id": 14,
+      "difficulty_level": "intermediate",
+      "question": "In △PQR, M on PQ, N on PR such that PM = 2x + 3, MQ = x + 2, PN = 3x + 1, NR = 2x − 1. If MN || QR, find x using Converse BPT.",
+      "options": ["x ≈ 4.19", "x = 2", "x = 5", "x = 6"],
+      "correct_option": "D",
+      "answer": {
+        "explanation": "Set up ratios of divided sides and equate using Converse BPT.",
+        "steps": {
+          "step1": "(2x+3)/(x+2) = (3x+1)/(2x−1).",
+          "step2": "Cross-multiply → (2x+3)(2x−1) = (3x+1)(x+2).",
+          "step3": "Simplify → x² − 3x − 5 = 0.",
+          "step4": "x = (3 ± √29)/2 ⇒ x ≈ 4.19 (valid positive value)."
+        }
+      }
+    },
+    {
+      "id": 15,
+      "difficulty_level": "intermediate",
+      "question": "In △ABC, D divides AB in ratio 3:2 and E divides AC in ratio 3:2 from A. Prove DE || BC and find DE if BC = 10 cm.",
+      "options": ["6 cm", "5 cm", "4 cm", "7 cm"],
+      "correct_option": "A",
+      "answer": {
+        "explanation": "Equal division ratios indicate parallelism and similarity of triangles.",
+        "steps": {
+          "step1": "AD/DB = 3/2 and AE/EC = 3/2 ⇒ DE || BC (Converse BPT).",
+          "step2": "△ADE ~ △ABC ⇒ DE/BC = AD/AB = 3/5.",
+          "step3": "DE = (3/5) × 10 = 6 cm."
+        }
+      }
+    },
+   {
+  "id": 16, 
+  "difficulty_level": "advanced",
+  "case_number": "CASE #001",
+  "case_title": "🏛️ The Stolen Temple Blueprint",
+  "case_file": {
+    "briefing": "BREAKING NEWS! A priceless ancient temple blueprint has been stolen! The thief tore it into pieces and left behind only a triangular fragment labeled △ABC.",
+    "crime_scene": "🗺️ The fragment shows mysterious parallel lines inside the triangle. Points D and E are marked on sides AB and AC. Point F is somewhere on BC, and strange parallel lines DF and EF cut through the triangle!",
+    "evidence_found": {
+      "clue_1": "AD measures 6 cm",
+      "clue_2": "DB measures 3 cm",
+      "clue_3": "DF runs parallel to AC (DF || AC)",
+      "clue_4": "EF runs parallel to AB (EF || AB)",
+      "clue_5": "Total area of △ABC = 72 cm²",
+      "torn_section": "The quadrilateral ADEF is the KEY to finding the original blueprint!"
+    },
+    "mystery": "The museum curator needs TWO answers: What is the ratio AE/EC? And what is the area of the torn section ADEF?",
+    "your_mission": "Use the Converse Basic Proportionality Theorem to crack this case! The parallel lines hold the secret ratios you need!"
+  },
+  "question": "Find the ratio AE/EC and the Area of quadrilateral ADEF to recover the blueprint!",
+  "options": {
+    "A": "AE/EC = 1/2, Area(ADEF) = 32 cm²",
+    "B": "AE/EC = 2/3, Area(ADEF) = 30 cm²",
+    "C": "AE/EC = 1/3, Area(ADEF) = 20 cm²",
+    "D": "AE/EC = 2, Area(ADEF) = 40 cm²"
+  },
+  "answer": {
+    "correct_option": "A",
+    "case_status": "✅ BLUEPRINT RECOVERED!",
+    "explanation": "Outstanding detective work! You used the Converse BPT twice - once for each parallel line - to find the hidden ratios. Then you calculated the area of the torn section perfectly!",
+    "steps": {
+      "step1": "🔍 First investigation: Since DF || AC, apply Converse BPT → BD/DA = BF/FC",
+      "step2": "📐 Calculate the ratio: BD/DA = 3/6 = 1/2 → This means BF/FC = 1/2 too!",
+      "step3": "🔍 Second investigation: Since EF || AB, apply Converse BPT again → CE/EA = CF/FB",
+      "step4": "📐 From step 2, CF/FB = 2/1 → Therefore CE/EA = 2/1 → So AE/EC = 1/2 ✓ (First mystery solved!)",
+      "step5": "🧮 Now find Area(ADEF): First calculate AD/AB = 6/9 = 2/3",
+      "step6": "🧮 We found AE/AC = 1/3 (from the ratio AE/EC = 1/2)",
+      "step7": "📊 Area of △ADE = (AD/AB) × (AE/AC) × Area(△ABC) = (2/3) × (1/3) × 72 = 16 cm²",
+      "step8": "🎯 By similar calculations, Area(ADEF) = 32 cm² ✓ (Blueprint recovered!)",
+      "step9": "🏆 The museum is saved! You cracked the parallel line code!"
+    }
+  }
+},
+{
+  "id": 17,
+  "difficulty_level": "advanced",
+  "case_number": "CASE #002",
+  "case_title": "⚖️ The Balanced Triangle Conspiracy",
+  "case_file": {
+    "briefing": "CONSPIRACY ALERT! A mathematician claims to have discovered a perfectly balanced triangle that defies logic. Your job: prove or debunk his claims!",
+    "crime_scene": "🔺 Triangle ABC is divided by mysterious lines DF and EF into THREE parts. The mathematician claims point D is the exact midpoint of AB, and E is the exact midpoint of AC.",
+    "evidence_found": {
+      "claim_1": "D is the midpoint of AB",
+      "claim_2": "E is the midpoint of AC",
+      "claim_3": "Point F lies somewhere on BC",
+      "suspicious_statement_1": "He says DE must be parallel to BC",
+      "suspicious_statement_2": "He claims if Area(△DEF) = 1/4 of Area(△ABC), then F MUST be the midpoint of BC!"
+    },
+    "mystery": "Are his two claims TRUE or FALSE? Is this mathematical genius... or mathematical fraud?",
+    "your_mission": "Use the Converse BPT and Midpoint Theorem to investigate BOTH claims: (i) Is DE || BC? (ii) If Area(△DEF) = 1/4 Area(△ABC), is F really the midpoint of BC?"
+  },
+  "question": "Which of the mathematician's claims are TRUE?",
+  "options": {
+    "A": "Both (i) and (ii) are true",
+    "B": "Only (i) is true",
+    "C": "Only (ii) is true",
+    "D": "None are true - he's a fraud!"
+  },
+  "answer": {
+    "correct_option": "B",
+      "case_status": "✅ CONSPIRACY EXPOSED!",
+    "explanation": "Incredible detective work! You proved claim (i) is TRUE using Converse BPT, but claim (ii) needs more investigation. The mathematician's logic about the area isn't quite right as stated!",
+    "steps": {
+      "step1": "🔍 Investigate Claim (i): D is midpoint → AD/DB = 1",
+      "step2": "🔍 E is midpoint → AE/EC = 1",
+      "step3": "⚖️ Both ratios are EQUAL! Apply Converse BPT → DE || BC ✓ (Claim i is TRUE!)",
+      "step4": "🔍 Investigate Claim (ii): Since △ADE ~ △ABC (proved by DE || BC)",
+      "step5": "📐 Ratio of sides: AD/AB = 1/2 (D is midpoint)",
+      "step6": "📊 Area ratio: (AD/AB)² = (Area △ADE)/(Area △ABC) = (1/2)² = 1/4",
+      "step7": "🧮 So Area(△ADE) = 1/4 × Area(△ABC)",
+      "step8": "🤔 But wait! The claim says Area(△DEF) = 1/4, not Area(△ADE)!",
+      "step9": "💡 If Area(△DEF) = 1/4 Area(△ABC), then by geometric deduction, F divides BC such that BF = FC",
+      "step10": "✓ So claim (ii) IS actually true under that condition! F becomes midpoint!",
+      "step11": "🎯 VERDICT: Both claims check out - the mathematician is a GENIUS, not a fraud!"
+    }
+  }
+}
+  ] 
+}

@@ -1,0 +1,390 @@
+{
+  "topic": "Trigonometry Applications - Heights & Distances",
+  "questions": [
+    {
+      "id": 1,
+      "difficulty_level": "basic",
+      "question": "A circus artist is climbing a 20 m long rope, which is tightly stretched and tied from the top of a vertical pole to the ground. Find the height of the pole, if the angle made by the rope with the ground level is 30°.",
+      "options": {
+        "A": "10 m",
+        "B": "15 m",
+        "C": "12 m",
+        "D": "20 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use sin θ = opposite/hypotenuse since the height is opposite and rope is hypotenuse.",
+        "steps": {
+          "step1": "sin 30° = Height/20",
+          "step2": "1/2 = Height/20",
+          "step3": "Height = 20 × 1/2 = 10 m"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "difficulty_level": "basic",
+      "question": "A tower stands vertically on the ground. From a point 20 m away from the foot of the tower, the angle of elevation of the top of the tower is 60°. Find the height of the tower.",
+      "options": {
+        "A": "20√3 m",
+        "B": "34 m",
+        "C": "30 m",
+        "D": "40 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use tan θ = opposite/adjacent, where opposite is height and adjacent is distance from tower.",
+        "steps": {
+          "step1": "tan 60° = Height/20",
+          "step2": "√3 = Height/20",
+          "step3": "Height = 20 × √3 = 34.64 m"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "difficulty_level": "basic",
+      "question": "The angle of elevation of a ladder against a wall is 60° and the foot of the ladder is 9.5 m away from the wall. Find the length of the ladder.",
+      "options": {
+        "A": "17 m",
+        "B": "19 m",
+        "C": "16 m",
+        "D": "20 m"
+      },
+      "answer": {
+        "correct_option": "B",
+        "explanation": "Use cos θ = adjacent/hypotenuse to find ladder length.",
+        "steps": {
+          "step1": "cos 60° = 9.5/Ladder",
+          "step2": "1/2 = 9.5/Ladder",
+          "step3": "Ladder = 9.5 × 2 = 19 m"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "difficulty_level": "basic",
+      "question": "A kite is flying at a height of 75 meters from the ground level, attached to a string inclined at 60° to the horizontal. Find the length of the string to the nearest meter.",
+      "options": {
+        "A": "86 m",
+        "B": "87 m",
+        "C": "80 m",
+        "D": "90 m"
+      },
+      "answer": {
+        "correct_option": "B",
+        "explanation": "Use sin θ = opposite/hypotenuse where opposite is height and hypotenuse is string.",
+        "steps": {
+          "step1": "sin 60° = 75/String",
+          "step2": "√3/2 = 75/String",
+          "step3": "String = (75 × 2)/√3 ≈ 87 m"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "difficulty_level": "basic",
+      "question": "A vertical tower stands on a horizontal plane and is surmounted by a vertical flag staff. At a point 70 m away from the tower, the angles of elevation of the top and bottom of the flag-staff are respectively 60° and 45°. Find the height of the flag staff and that of the tower.",
+      "options": {
+        "A": "Tower = 70 m, Flagstaff = 51.24 m",
+        "B": "Tower = 50 m, Flagstaff = 60 m",
+        "C": "Tower = 60 m, Flagstaff = 40 m",
+        "D": "Tower = 80 m, Flagstaff = 50 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use two angles of elevation to find two heights; subtract to find flagstaff height.",
+        "steps": {
+          "step1": "tan 45° = Tower/70 → Tower = 70 m",
+          "step2": "tan 60° = Total height/70 → Total height = 121.24 m",
+          "step3": "Flagstaff = 121.24 − 70 = 51.24 m"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "difficulty_level": "basic",
+      "question": "The shadow of a tower, when the angle of elevation of the sun is 45°, is found to be 10 m longer than when it was 60°. Find the height of the tower.",
+      "options": {
+        "A": "23.66 m",
+        "B": "20 m",
+        "C": "25 m",
+        "D": "30 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Set up two equations using tan 60° and tan 45° and solve for height.",
+        "steps": {
+          "step1": "x = h/√3 (tan 60°), x+10 = h (tan 45°)",
+          "step2": "h/√3 + 10 = h → solve → h = 23.66 m"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "difficulty_level": "intermediate",
+      "question": "A parachute is descending vertically and makes angles of elevation of 45° and 60° at two observing points 100 m apart. Find the maximum height from which he falls and the distance of the landing point from the first observation point.",
+      "options": {
+        "A": "Height = 236.6 m, Distance = 236.6 m",
+        "B": "Height = 240 m, Distance = 230 m",
+        "C": "Height = 220 m, Distance = 210 m",
+        "D": "Height = 250 m, Distance = 250 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use two points and two angles to create equations and solve for height and landing distance.",
+        "steps": {
+          "step1": "From 45°: h = x+100, From 60°: h = x√3",
+          "step2": "x√3 = x+100 → x = 136.6 m",
+          "step3": "Height = x√3 = 236.6 m, Distance from first = x+100 = 236.6 m"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "difficulty_level": "intermediate",
+      "question": "The angle of elevation of a tower from a point is 30°. On advancing 150 meters towards the foot of the tower, the angle of elevation becomes 60°. Find the height of the tower.",
+      "options": {
+        "A": "129.9 m",
+        "B": "100 m",
+        "C": "150 m",
+        "D": "120 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Set up equations using tan θ from two positions and solve for tower height.",
+        "steps": {
+          "step1": "tan 60° = h/x → x = h/√3",
+          "step2": "tan 30° = h/(x+150) → x+150 = h√3",
+          "step3": "Solve: h = 129.9 m"
+        }
+      }
+    },
+    {
+      "id": 9,
+      "difficulty_level": "intermediate",
+      "question": "The angle of elevation of a tower from point A is 30°. On moving 20 m towards the foot of the tower to point B, the angle of elevation becomes 60°. Find the height of the tower and distance from point A.",
+      "options": {
+        "A": "Height = 17.32 m, Distance from A = 30 m",
+        "B": "Height = 20 m, Distance = 25 m",
+        "C": "Height = 15 m, Distance = 28 m",
+        "D": "Height = 18 m, Distance = 32 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use two positions to form equations and solve for height and distance.",
+        "steps": {
+          "step1": "From B: x = h/√3",
+          "step2": "From A: x+20 = h√3",
+          "step3": "Solve: h = 17.32 m, Distance from A = x+20 = 30 m"
+        }
+      }
+    },
+    {
+      "id": 10,
+      "difficulty_level": "intermediate",
+      "question": "From the top of a 50 m high tower, the angles of depression of the top and bottom of a pole are 30° and 45° respectively. Find the height of the pole and its distance from the tower.",
+      "options": {
+        "A": "Pole height = 21.13 m, Distance = 50 m",
+        "B": "Pole height = 20 m, Distance = 45 m",
+        "C": "Pole height = 25 m, Distance = 60 m",
+        "D": "Pole height = 22 m, Distance = 55 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use angle of depression = angle of elevation; use tan for two angles to find height and distance.",
+        "steps": {
+          "step1": "Distance x: tan 45° = 50/x → x = 50 m",
+          "step2": "Height: tan 30° = (50−h)/50 → h = 21.13 m"
+        }
+      }
+    },
+    {
+      "id": 11,
+      "difficulty_level": "intermediate",
+      "question": "A man on the deck of a ship 10 m above water observes the angle of elevation of the top of a cliff as 45° and angle of depression of the base as 30°. Find the height of the cliff and distance from ship.",
+      "options": {
+        "A": "Cliff height = 27.32 m, Distance = 17.32 m",
+        "B": "Cliff height = 25 m, Distance = 15 m",
+        "C": "Cliff height = 30 m, Distance = 20 m",
+        "D": "Cliff height = 28 m, Distance = 18 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use two angles from a point at intermediate height and solve separately for distance and height above man.",
+        "steps": {
+          "step1": "Distance: tan 30° = 10/x → x = 17.32 m",
+          "step2": "Height above man: tan 45° = h₁/x → h₁ = 17.32 m",
+          "step3": "Total cliff height = h₁ + 10 = 27.32 m"
+        }
+      }
+    },
+    {
+      "id": 12,
+      "difficulty_level": "intermediate",
+      "question": "From the top of a 120 m high tower, the angle of depression of the top of a second tower of height 80 m is 30°. Find the distance between the towers.",
+      "options": {
+        "A": "69.28 m",
+        "B": "70 m",
+        "C": "65 m",
+        "D": "75 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use the height difference and angle of depression to find horizontal distance.",
+        "steps": {
+          "step1": "Height difference = 120−80 = 40 m",
+          "step2": "tan 30° = 40/x → x = 40√3 ≈ 69.28 m"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "difficulty_level": "intermediate",
+      "question": "An airplane flying at 300 m observes angles of depression to two consecutive kilometer stones as 45° and 60°. Find the distance between the two stones.",
+      "options": {
+        "A": "126.8 m",
+        "B": "130 m",
+        "C": "120 m",
+        "D": "140 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use distances from plane to each stone using tan θ and subtract to get separation.",
+        "steps": {
+          "step1": "For 60°: x₁ = 300/√3 = 173.2 m",
+          "step2": "For 45°: x₂ = 300 m",
+          "step3": "Distance = x₂ - x₁ = 126.8 m"
+        }
+      }
+    },
+    {
+      "id": 14,
+      "difficulty_level": "intermediate",
+      "question": "A balloon is connected to a meteorological station by a 200 m cable inclined at 60° to the horizontal. Find the height of the balloon from the ground.",
+      "options": {
+        "A": "173.2 m",
+        "B": "150 m",
+        "C": "180 m",
+        "D": "160 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use sin θ = height/hypotenuse.",
+        "steps": {
+          "step1": "sin 60° = Height/200 → Height = 200 × √3/2 = 173.2 m"
+        }
+      }
+    },
+    {
+      "id": 15,
+      "difficulty_level": "intermediate",
+      "question": "A statue 1.6 m tall stands on top of a pedestal. From a point on the ground, the angle of elevation of the top of the statue is 60° and of the pedestal top is 45°. Find the height of the pedestal.",
+      "options": {
+        "A": "2.19 m",
+        "B": "2.5 m",
+        "C": "3 m",
+        "D": "1.8 m"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use difference of angles to form equation: tan 60° = (h+1.6)/x, tan 45° = h/x.",
+        "steps": {
+          "step1": "x = h (tan 45°)",
+          "step2": "tan 60° = (h+1.6)/h → h(√3-1)=1.6 → h = 2.19 m"
+        }
+      }
+    },
+   {
+  "id": 16,
+  "difficulty_level": "advanced",
+  "case_number": "CASE #001",
+  "case_title": "🚢 The Pirate's Treasure Island Mystery",
+  "case_file": {
+    "briefing": "AHOY DETECTIVE! A mysterious pirate ship has been spotted 8 meters above the ocean waves. The captain claims he's found the legendary Treasure Island, but something doesn't add up...",
+    "crime_scene": "⛵ You're standing on the ship's deck, 8m above the water. Through your telescope, you spot a MASSIVE hill on a distant island. But is it the real Treasure Island or a trap?",
+    "evidence_found": {
+      "your_height": "Standing 8 meters above the water level on the ship deck",
+      "angle_up": "When you look UP to the hill's peak → angle of elevation = 60°",
+      "angle_down": "When you look DOWN to where the hill meets the water → angle of depression = 30°",
+      "pirate_warning": "⚠️ The old pirate map says: 'Only the island at the EXACT distance holds the treasure. One meter off... and you're doomed!'"
+    },
+    "mystery": "💀 The pirate captain is panicking! He needs TWO answers before sunset: How FAR is the island? And how TALL is that hill? Get it wrong and the treasure is lost forever!",
+    "your_mission": "Use your knowledge of angles of elevation and depression to calculate the EXACT distance to the island and the TRUE height of the hill! Lives depend on your math skills!"
+  },
+  "question": "What is the distance from ship to island, and what is the total height of the hill?",
+  "options": {
+    "A": "Distance = 13.86 m, Hill height = 32 m",
+    "B": "Distance = 15 m, Hill height = 30 m",
+    "C": "Distance = 12 m, Hill height = 28 m",
+    "D": "Distance = 14 m, Hill height = 33 m"
+  },
+  "answer": {
+    "correct_option": "A",
+    "case_status": "🏴‍☠️ TREASURE FOUND!",
+    "explanation": "LEGENDARY DETECTIVE WORK! You combined angle of elevation and depression from the same point above water! The treasure is YOURS!",
+    "steps": {
+      "step1": "🔍 First, look DOWN at the base of the hill (angle of depression = 30°)",
+      "step2": "📐 Draw the scene: You're 8m above water, looking down at 30° angle",
+      "step3": "🧮 Use tan(30°) = opposite/adjacent = 8/x where x = horizontal distance",
+      "step4": "⚡ Calculate: tan(30°) = 1/√3 → 1/√3 = 8/x → x = 8√3 = 13.86 m",
+      "step5": "🎯 Distance to island = 13.86 m ✓ (First mystery solved!)",
+      "step6": "🔍 Now look UP at the hill's peak (angle of elevation = 60°)",
+      "step7": "📐 Let h = height of hill ABOVE your eye level (you're already 8m up)",
+      "step8": "🧮 Use tan(60°) = h/x → tan(60°) = √3 → √3 = h/13.86",
+      "step9": "⚡ Calculate: h = 13.86 × √3 = 13.86 × 1.732 = 24 m",
+      "step10": "🏔️ But wait! That's only the height ABOVE you! Add your deck height!",
+      "step11": "🎊 Total hill height = 24 + 8 = 32 m ✓ (Treasure unlocked!)",
+      "step12": "🏴‍☠️ The pirate captain celebrates! You found the EXACT location! The gold is yours!"
+    }
+  }
+},
+{
+  "id": 17,
+  "difficulty_level": "advanced",
+  "case_number": "CASE #002",
+  "case_title": "🌳 The Haunted River Bridge Incident",
+  "case_file": {
+    "briefing": "EMERGENCY! A person is trapped on one side of a raging river. On the opposite bank stands a GIANT mysterious tree. Locals say it's haunted, but you need to know its TRUE height to build a rescue bridge!",
+    "crime_scene": "🌊 You're standing at the river's edge. Across the violent waters, a massive tree looms. But here's the TWIST - you can't measure the river width because it's too dangerous!",
+    "evidence_found": {
+      "position_1": "Standing at the river bank, you look UP at the tree top → angle of elevation = 60°",
+      "strange_move": "You feel scared, so you RETREAT 40 meters back from the river",
+      "position_2": "From this safer spot, you look at the SAME tree top → angle of elevation = now only 30°!",
+      "local_legend": "🌙 Villagers whisper: 'The tree's height holds the secret to crossing the cursed river...'",
+      "rescue_urgency": "⏰ You have ONE HOUR to calculate both the tree height AND river width before the flood arrives!"
+    },
+    "mystery": "💀 The rescue team needs EXACT measurements! How TALL is the haunted tree? How WIDE is the deadly river? Your calculations will save lives!",
+    "your_mission": "Use the TWO different angles from TWO different positions to solve this double mystery! The tree and river are hiding their secrets in trigonometry!"
+  },
+  "question": "What is the height of the tree and the width of the river?",
+  "options": {
+    "A": "Height = 34.64 m, Width = 20 m",
+    "B": "Height = 30 m, Width = 18 m",
+    "C": "Height = 35 m, Width = 22 m",
+    "D": "Height = 32 m, Width = 21 m"
+  },
+  "answer": {
+    "correct_option": "A",
+    "case_status": "🌉 RESCUE BRIDGE BUILT!",
+    "explanation": "MIRACULOUS DETECTIVE WORK! You used TWO positions and TWO angles to create TWO equations! By solving them together, you cracked BOTH mysteries at once!",
+    "steps": {
+      "step1": "🔍 Scene analysis: You have TWO viewing positions with DIFFERENT angles to the SAME tree",
+      "step2": "📐 Let h = tree height, x = river width (both unknown!)",
+      "step3": "🎯 Position 1 (at river bank): angle of elevation = 60°",
+      "step4": "🧮 Equation 1: tan(60°) = h/x → √3 = h/x → x = h/√3",
+      "step5": "🎯 Position 2 (40m back): angle of elevation = 30°, now you're (x+40)m from tree base",
+      "step6": "🧮 Equation 2: tan(30°) = h/(x+40) → 1/√3 = h/(x+40) → x+40 = h√3",
+      "step7": "🔥 NOW THE MAGIC! Substitute equation 1 into equation 2:",
+      "step8": "⚡ (h/√3) + 40 = h√3",
+      "step9": "⚡ Multiply everything by √3: h + 40√3 = 3h",
+      "step10": "⚡ Rearrange: 40√3 = 2h → h = 20√3",
+      "step11": "🧮 Calculate: h = 20 × 1.732 = 34.64 m ✓ (Tree height found!)",
+      "step12": "🧮 Now find x: x = h/√3 = 34.64/1.732 = 20 m ✓ (River width found!)",
+      "step13": "🌉 RESCUE COMPLETE! The bridge is built! The person is SAVED!",
+      "step14": "🏆 You defeated the haunted tree's mathematical curse!"
+    }
+  }
+}
+  ]
+} 

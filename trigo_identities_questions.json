@@ -1,0 +1,407 @@
+{
+  "topic": "Trigonometric Identities",
+  "questions": [
+    {
+      "id": 1,
+      "difficulty_level": "basic",
+      "question": "Prove: sin²θ + cos²θ = 1",
+      "options": {
+        "A": "cos²θ",
+        "B": "tan²θ",
+        "C": "1",
+        "D": "sin θ"
+      },
+      "answer": {
+        "correct_option": "C",
+        "explanation": "This is the fundamental Pythagorean identity. Using a right triangle of hypotenuse 1, opposite² + adjacent² = 1, which corresponds to sin²θ + cos²θ = 1.",
+        "steps": {
+          "step1": "From unit circle: sin θ = opposite/hypotenuse, cos θ = adjacent/hypotenuse",
+          "step2": "In right triangle with hypotenuse 1: opposite² + adjacent² = 1²",
+          "step3": "Therefore, sin²θ + cos²θ = 1"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "difficulty_level": "basic",
+      "question": "Prove: 1 - sin²θ = cos²θ",
+      "options": {
+        "A": "cos²θ",
+        "B": "1",
+        "C": "tan²θ",
+        "D": "cosec²θ"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Rearranging the fundamental identity sin²θ + cos²θ = 1 gives cos²θ = 1 - sin²θ.",
+        "steps": {
+          "step1": "Start with sin²θ + cos²θ = 1",
+          "step2": "Subtract sin²θ from both sides",
+          "step3": "cos²θ = 1 - sin²θ"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "difficulty_level": "basic",
+      "question": "Prove: 1 + tan²θ = sec²θ",
+      "options": {
+        "A": "cot²θ",
+        "B": "sec²θ",
+        "C": "tan²θ",
+        "D": "cosec²θ"
+      },
+      "answer": {
+        "correct_option": "B",
+        "explanation": "Divide the fundamental identity sin²θ + cos²θ = 1 by cos²θ to get 1 + tan²θ = sec²θ.",
+        "steps": {
+          "step1": "sin²θ + cos²θ = 1",
+          "step2": "Divide both sides by cos²θ: sin²θ/cos²θ + cos²θ/cos²θ = 1/cos²θ",
+          "step3": "tan²θ + 1 = sec²θ"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "difficulty_level": "basic",
+      "question": "Prove: 1 + cot²θ = cosec²θ",
+      "options": {
+        "A": "sec²θ",
+        "B": "cot²θ",
+        "C": "1",
+        "D": "cosec²θ"
+      },
+      "answer": {
+        "correct_option": "D",
+        "explanation": "Divide the fundamental identity sin²θ + cos²θ = 1 by sin²θ to get 1 + cot²θ = cosec²θ.",
+        "steps": {
+          "step1": "sin²θ + cos²θ = 1",
+          "step2": "Divide both sides by sin²θ: sin²θ/sin²θ + cos²θ/sin²θ = 1/sin²θ",
+          "step3": "1 + cot²θ = cosec²θ"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "difficulty_level": "basic",
+      "question": "Prove: sec²θ - tan²θ = 1",
+      "options": {
+        "A": "1",
+        "B": "sec²θ",
+        "C": "tan²θ",
+        "D": "cosec²θ"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "From 1 + tan²θ = sec²θ, rearranging gives sec²θ - tan²θ = 1.",
+        "steps": {
+          "step1": "Start from 1 + tan²θ = sec²θ",
+          "step2": "Subtract tan²θ from both sides",
+          "step3": "sec²θ - tan²θ = 1"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "difficulty_level": "basic",
+      "question": "Prove: cosec²θ - cot²θ = 1",
+      "options": {
+        "A": "sec²θ",
+        "B": "1",
+        "C": "cosec²θ",
+        "D": "cot²θ"
+      },
+      "answer": {
+        "correct_option": "B",
+        "explanation": "From 1 + cot²θ = cosec²θ, rearranging gives cosec²θ - cot²θ = 1.",
+        "steps": {
+          "step1": "Start from 1 + cot²θ = cosec²θ",
+          "step2": "Subtract cot²θ from both sides",
+          "step3": "cosec²θ - cot²θ = 1"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "difficulty_level": "intermediate",
+      "question": "Prove: (1 - sin θ)(1 + sin θ) = cos²θ",
+      "options": {
+        "A": "cos²θ",
+        "B": "sin²θ",
+        "C": "1",
+        "D": "tan²θ"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use difference of squares formula: (a-b)(a+b) = a² - b² and the fundamental identity 1 - sin²θ = cos²θ.",
+        "steps": {
+          "step1": "LHS = (1 - sin θ)(1 + sin θ)",
+          "step2": "Use (a - b)(a + b) = a² - b² → 1 - sin²θ",
+          "step3": "Use 1 - sin²θ = cos²θ",
+          "step4": "LHS = RHS"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "difficulty_level": "intermediate",
+      "question": "Prove: (sec θ - tan θ)(sec θ + tan θ) = 1",
+      "options": {
+        "A": "sec²θ",
+        "B": "1",
+        "C": "tan²θ",
+        "D": "cosec²θ"
+      },
+      "answer": {
+        "correct_option": "B",
+        "explanation": "Use difference of squares formula: (a-b)(a+b) = a² - b² and sec²θ - tan²θ = 1.",
+        "steps": {
+          "step1": "LHS = (sec θ - tan θ)(sec θ + tan θ)",
+          "step2": "Use (a - b)(a + b) = a² - b² → sec²θ - tan²θ",
+          "step3": "Use sec²θ - tan²θ = 1",
+          "step4": "LHS = RHS"
+        }
+      }
+    },
+    {
+      "id": 9,
+      "difficulty_level": "intermediate",
+      "question": "Prove: (cosec θ - cot θ)(cosec θ + cot θ) = 1",
+      "options": {
+        "A": "1",
+        "B": "cosec²θ",
+        "C": "cot²θ",
+        "D": "sec²θ"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use difference of squares formula and cosec²θ - cot²θ = 1.",
+        "steps": {
+          "step1": "LHS = (cosec θ - cot θ)(cosec θ + cot θ)",
+          "step2": "Use (a-b)(a+b) = a² - b² → cosec²θ - cot²θ",
+          "step3": "Use cosec²θ - cot²θ = 1",
+          "step4": "LHS = RHS"
+        }
+      }
+    },
+    {
+      "id": 10,
+      "difficulty_level": "intermediate",
+      "question": "Prove: (sin θ + cos θ)² + (sin θ - cos θ)² = 2",
+      "options": {
+        "A": "2",
+        "B": "1",
+        "C": "sin²θ",
+        "D": "cos²θ"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Expand both squares using (a±b)² and simplify using sin²θ + cos²θ = 1.",
+        "steps": {
+          "step1": "Expand: (sin θ + cos θ)² = sin²θ + cos²θ + 2sin θ cos θ",
+          "step2": "Expand: (sin θ - cos θ)² = sin²θ + cos²θ - 2sin θ cos θ",
+          "step3": "Add both: 2(sin²θ + cos²θ) = 2(1) = 2",
+          "step4": "LHS = RHS"
+        }
+      }
+    },
+    {
+      "id": 11,
+      "difficulty_level": "intermediate",
+      "question": "Prove: (1 + tan²θ)/(1 + cot²θ) = tan²θ",
+      "options": {
+        "A": "tan²θ",
+        "B": "sec²θ",
+        "C": "cosec²θ",
+        "D": "1"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use 1 + tan²θ = sec²θ and 1 + cot²θ = cosec²θ, then simplify fractions.",
+        "steps": {
+          "step1": "LHS = (1 + tan²θ)/(1 + cot²θ) = sec²θ/cosec²θ",
+          "step2": "sec²θ/cosec²θ = (1/cos²θ)/(1/sin²θ) = sin²θ/cos²θ = tan²θ",
+          "step3": "LHS = RHS"
+        }
+      }
+    },
+    {
+      "id": 12,
+      "difficulty_level": "intermediate",
+      "question": "Prove: (sec²θ - 1)/sec²θ = sin²θ",
+      "options": {
+        "A": "tan²θ",
+        "B": "sin²θ",
+        "C": "cos²θ",
+        "D": "1"
+      },
+      "answer": {
+        "correct_option": "B",
+        "explanation": "Use sec²θ - 1 = tan²θ and simplify fractions to get sin²θ.",
+        "steps": {
+          "step1": "(sec²θ - 1)/sec²θ = tan²θ/sec²θ",
+          "step2": "tan²θ/sec²θ = (sin²θ/cos²θ)/(1/cos²θ) = sin²θ",
+          "step3": "LHS = RHS"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "difficulty_level": "intermediate",
+      "question": "Prove: (cosec²θ - 1)/cosec²θ = cos²θ",
+      "options": {
+        "A": "1",
+        "B": "cos²θ",
+        "C": "sin²θ",
+        "D": "cot²θ"
+      },
+      "answer": {
+        "correct_option": "B",
+        "explanation": "Use cosec²θ - 1 = cot²θ and simplify fractions to get cos²θ.",
+        "steps": {
+          "step1": "(cosec²θ - 1)/cosec²θ = cot²θ/cosec²θ",
+          "step2": "cot²θ/cosec²θ = (cos²θ/sin²θ)/(1/sin²θ) = cos²θ",
+          "step3": "LHS = RHS"
+        }
+      }
+    },
+    {
+      "id": 14,
+      "difficulty_level": "intermediate",
+      "question": "Prove: tan²θ - sin²θ = tan²θ × sin²θ",
+      "options": {
+        "A": "tan²θ × sin²θ",
+        "B": "sin²θ",
+        "C": "tan²θ",
+        "D": "cos²θ"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Factor out sin²θ from LHS and use 1 - cos²θ = sin²θ to simplify.",
+        "steps": {
+          "step1": "LHS = tan²θ - sin²θ = sin²θ/cos²θ - sin²θ",
+          "step2": "Factor: sin²θ(1/cos²θ - 1) = sin²θ(1 - cos²θ)/cos²θ",
+          "step3": "Use 1 - cos²θ = sin²θ → sin²θ × sin²θ/cos²θ = sin²θ × tan²θ",
+          "step4": "LHS = RHS"
+        }
+      }
+    },
+    {
+      "id": 15,
+      "difficulty_level": "intermediate",
+      "question": "Prove: √[(1 + sin θ)/(1 - sin θ)] = sec θ + tan θ",
+      "options": {
+        "A": "sec θ + tan θ",
+        "B": "cosec θ + cot θ",
+        "C": "1",
+        "D": "tan θ"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Rationalize LHS, use 1 - sin²θ = cos²θ, then split fraction to get sec θ + tan θ.",
+        "steps": {
+          "step1": "LHS = √[(1 + sin θ)/(1 - sin θ)]",
+          "step2": "Multiply numerator and denominator by (1 + sin θ) → √[(1 + sin θ)²/(1 - sin²θ)]",
+          "step3": "1 - sin²θ = cos²θ → √[(1 + sin θ)²/cos²θ] = (1 + sin θ)/cos θ = sec θ + tan θ",
+          "step4": "LHS = RHS"
+        }
+      }
+    },
+  {
+  "id": 16,
+  "difficulty_level": "advanced",
+  "case_number": "CASE #001",
+  "case_title": "🔐 The Locksmith's Impossible Safe",
+  "case_file": {
+    "briefing": "CRISIS! A master thief has locked the city's gold in an IMPOSSIBLE mathematical safe! The only way to open it is to prove a mysterious trigonometric equation carved on the door.",
+    "crime_scene": "🏦 You stand before a massive vault door. Engraved in golden letters is a cryptic mathematical challenge that no one has ever solved...",
+    "evidence_found": {
+      "left_side": "(sec θ - tan θ)² ← The thief's mysterious formula",
+      "right_side": "(1 - sin θ)/(1 + sin θ) ← What it MUST equal to unlock",
+      "thief_note": "💀 'Prove they're EQUAL and the gold is yours. Get it wrong... the vault seals FOREVER!'",
+      "ancient_hint": "A faded scroll nearby whispers: 'What sec and tan create together... they can destroy apart...'",
+      "time_limit": "⏰ 30 minutes before the vault locks permanently!"
+    },
+    "mystery": "🎭 Are these two expressions truly EQUAL? Can you PROVE it using trigonometric identities? The fate of the city's gold depends on your algebraic skills!",
+    "your_mission": "Transform the LEFT side into the RIGHT side using trigonometric magic! Use identities like sec²θ - tan²θ = 1 and sin²θ + cos²θ = 1 to crack this impossible lock!"
+  },
+  "question": "What does (sec θ - tan θ)² equal when fully simplified?",
+  "options": {
+    "A": "(1 - sin θ)/(1 + sin θ)",
+    "B": "sec²θ",
+    "C": "1",
+    "D": "tan²θ"
+  },
+  "answer": {
+    "correct_option": "A",
+    "case_status": "💰 VAULT OPENED!",
+    "explanation": "GENIUS LEVEL DETECTIVE WORK! You used the legendary difference of squares identity (sec θ - tan θ)(sec θ + tan θ) = 1 and transformed it through MULTIPLE identities! The gold is saved!",
+    "steps": {
+      "step1": "🔍 Starting point: LHS = (sec θ - tan θ)²",
+      "step2": "💡 Secret trick: Remember that (sec θ - tan θ)(sec θ + tan θ) = sec²θ - tan²θ = 1",
+      "step3": "🎯 Clever move: Multiply by (sec θ + tan θ)²/(sec θ + tan θ)² = 1 (doesn't change value!)",
+      "step4": "⚡ This gives: [(sec θ - tan θ)(sec θ + tan θ)]² / (sec θ + tan θ)²",
+      "step5": "🔥 Simplify numerator: [1]² / (sec θ + tan θ)² = 1/(sec θ + tan θ)²",
+      "step6": "🧮 Expand the denominator: sec θ + tan θ = (1/cos θ) + (sin θ/cos θ) = (1 + sin θ)/cos θ",
+      "step7": "⚡ So: 1/[(1 + sin θ)/cos θ]² = 1/[(1 + sin θ)²/cos²θ] = cos²θ/(1 + sin θ)²",
+      "step8": "🎭 Now use the GOLDEN identity: cos²θ = 1 - sin²θ = (1 - sin θ)(1 + sin θ)",
+      "step9": "🔥 Substitute: [(1 - sin θ)(1 + sin θ)]/(1 + sin θ)² ",
+      "step10": "✨ Cancel (1 + sin θ) from top and bottom: (1 - sin θ)/(1 + sin θ)",
+      "step11": "🎊 LHS = RHS = (1 - sin θ)/(1 + sin θ) ✓ PROVED!",
+      "step12": "💰 *CLICK* The vault door swings open! You CRACKED the trigonometric code!",
+      "step13": "🏆 The city hails you as the MATHEMATICAL HERO!"
+    }
+  }
+},
+{
+  "id": 17,
+  "difficulty_level": "advanced",
+  "case_number": "CASE #002",
+  "case_title": "🎪 The Circus of Chaos - Three Acrobats Mystery",
+  "case_file": {
+    "briefing": "BIZARRE INCIDENT! Three mysterious circus acrobats claim they can perform an IMPOSSIBLE mathematical stunt. They say when they combine their tricks, the result is EXACTLY 1. But is it real... or the greatest illusion ever?",
+    "crime_scene": "🎭 The Grand Circus Stage: Three acrobats stand in spotlights, each representing a different trigonometric expression. They must prove their combined act equals exactly 1!",
+    "evidence_found": {
+      "acrobat_1": "(cosec θ - sin θ) ← The Mystic",
+      "acrobat_2": "(sec θ - cos θ) ← The Shadow",
+      "acrobat_3": "(tan θ + cot θ) ← The Dancer",
+      "ringmaster_challenge": "🎩 'When all THREE perform TOGETHER, their product MUST equal 1... or they're FRAUDS!'",
+      "audience_doubt": "😱 Thousands watching! Math professors say it's IMPOSSIBLE!",
+      "circus_curse": "💀 Legend says: If they FAIL, the circus closes FOREVER!"
+    },
+    "mystery": "🤹 Can you PROVE that (cosec θ - sin θ)(sec θ - cos θ)(tan θ + cot θ) = 1? Or will you expose them as mathematical FRAUDS?",
+    "your_mission": "Simplify EACH acrobat's expression using basic identities, then multiply them ALL together! If it equals 1, they're legends. If not... the circus is DOOMED!"
+  },
+  "question": "What is the product (cosec θ - sin θ)(sec θ - cos θ)(tan θ + cot θ)?",
+  "options": {
+    "A": "1",
+    "B": "sec²θ",
+    "C": "tan²θ",
+    "D": "cosec²θ"
+  },
+  "answer": {
+    "correct_option": "A",
+    "case_status": "🎪 CIRCUS SAVED!",
+    "explanation": "SPECTACULAR DETECTIVE WORK! You simplified each acrobat's trick individually, then combined them in a MAGNIFICENT finale! The THREE expressions multiply to create perfect mathematical HARMONY = 1!",
+    "steps": {
+      "step1": "🎭 ACROBAT 1 - The Mystic: Simplify (cosec θ - sin θ)",
+      "step2": "🧮 Convert: cosec θ = 1/sin θ → (1/sin θ) - sin θ",
+      "step3": "⚡ Common denominator: (1 - sin²θ)/sin θ = cos²θ/sin θ ✓",
+      "step4": "🎭 ACROBAT 2 - The Shadow: Simplify (sec θ - cos θ)",
+      "step5": "🧮 Convert: sec θ = 1/cos θ → (1/cos θ) - cos θ",
+      "step6": "⚡ Common denominator: (1 - cos²θ)/cos θ = sin²θ/cos θ ✓",
+      "step7": "🎭 ACROBAT 3 - The Dancer: Simplify (tan θ + cot θ)",
+      "step8": "🧮 Convert: tan θ = sin θ/cos θ, cot θ = cos θ/sin θ",
+      "step9": "⚡ Common denominator: (sin²θ + cos²θ)/(sin θ cos θ) = 1/(sin θ cos θ) ✓",
+      "step10": "🎪 THE GRAND FINALE! Multiply all THREE:",
+      "step11": "🔥 (cos²θ/sin θ) × (sin²θ/cos θ) × [1/(sin θ cos θ)]",
+      "step12": "✨ Rearrange: (cos²θ × sin²θ × 1)/(sin θ × cos θ × sin θ × cos θ)",
+      "step13": "⚡ Simplify: (cos²θ × sin²θ)/(sin²θ × cos²θ) = 1 ✓",
+      "step14": "🎊 LHS = RHS = 1 PROVED!",
+      "step15": "🏆 The audience EXPLODES in applause! The circus is SAVED!",
+      "step16": "🎭 The three acrobats bow - they were MATHEMATICAL LEGENDS all along!"
+    }
+  }
+}
+  ]
+}

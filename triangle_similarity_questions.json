@@ -1,0 +1,415 @@
+{
+  "topic": "Similarity Criterion",
+  "questions": [
+    {
+      "id": 1,
+      "difficulty_level": "basic",
+      "question": "Two similar triangles have sides in ratio 3:5. If the smallest side of the smaller triangle is 9 cm, find the smallest side of the larger triangle using the SSS similarity criterion.",
+      "options": {
+        "A": "12 cm",
+        "B": "10 cm",
+        "C": "15 cm",
+        "D": "18 cm"
+      },
+      "answer": {
+        "correct_option": "C",
+        "explanation": "Use the Side-Side-Side (SSS) similarity rule. Multiply the smallest side of the smaller triangle by the ratio 5/3 to get the corresponding side of the larger triangle.",
+        "steps": {
+          "step1": "Triangles are similar by SSS criterion, so all sides are proportional.",
+          "step2": "Ratio of sides = 3:5.",
+          "step3": "Let x = smallest side of larger triangle.",
+          "step4": "3/5 = 9/x.",
+          "step5": "Cross-multiply: 3x = 45.",
+          "step6": "x = 15 cm.",
+          "step7": "Hence, the smallest side of the larger triangle is 15 cm."
+        }
+      }
+    },
+    {
+      "id": 2,
+      "difficulty_level": "basic",
+      "question": "In △ABC and △PQR, ∠A = 50°, ∠B = 60°, ∠P = 50°, and ∠Q = 60°. Are the triangles similar, and which similarity criterion applies?",
+      "options": {
+        "A": "Yes, SAS",
+        "B": "Yes, AA",
+        "C": "Yes, SSS",
+        "D": "No"
+      },
+      "answer": {
+        "correct_option": "B",
+        "explanation": "If two angles of one triangle equal two angles of another, the triangles are similar by the AA criterion.",
+        "steps": {
+          "step1": "Given ∠A = ∠P and ∠B = ∠Q.",
+          "step2": "Two pairs of corresponding angles are equal.",
+          "step3": "Therefore, triangles are similar by the AA criterion."
+        }
+      }
+    },
+    {
+      "id": 3,
+      "difficulty_level": "basic",
+      "question": "Triangle ABC has sides 4 cm, 6 cm, 8 cm, and triangle DEF has sides 6 cm, 9 cm, 12 cm. Are they similar? Verify using the SSS similarity criterion.",
+      "options": {
+        "A": "Yes, SAS",
+        "B": "No",
+        "C": "Cannot say",
+        "D": "Yes, SSS"
+      },
+      "answer": {
+        "correct_option": "D",
+        "explanation": "Compare ratios of all three corresponding sides. If all ratios are equal, triangles are similar by SSS criterion.",
+        "steps": {
+          "step1": "AB/DE = 4/6 = 2/3.",
+          "step2": "BC/EF = 6/9 = 2/3.",
+          "step3": "CA/FD = 8/12 = 2/3.",
+          "step4": "All ratios are equal.",
+          "step5": "Hence, triangles ABC and DEF are similar by SSS criterion."
+        }
+      }
+    },
+    {
+      "id": 4,
+      "difficulty_level": "basic",
+      "question": "In △ABC, DE ∥ BC. Prove that △ADE ∼ △ABC. If AD = 3 cm, AB = 9 cm, AE = 4 cm, find AC.",
+      "options": {
+        "A": "AC = 8 cm",
+        "B": "AC = 12 cm",
+        "C": "AC = 10 cm",
+        "D": "AC = 9 cm"
+      },
+      "answer": {
+        "correct_option": "B",
+        "explanation": "Parallel lines create equal corresponding angles. Use AA similarity and proportionality of sides to find AC.",
+        "steps": {
+          "step1": "DE ∥ BC ⇒ ∠ADE = ∠ABC (corresponding angles).",
+          "step2": "∠A = ∠A (common angle).",
+          "step3": "Therefore, △ADE ∼ △ABC by AA similarity.",
+          "step4": "Use proportion AD/AB = AE/AC.",
+          "step5": "3/9 = 4/AC.",
+          "step6": "Cross-multiply: 3 × AC = 36.",
+          "step7": "AC = 12 cm."
+        }
+      }
+    },
+    {
+      "id": 5,
+      "difficulty_level": "basic",
+      "question": "Triangles ABC and PQR are similar by the SAS criterion. AB = 4 cm, AC = 6 cm, ∠A = 60°, PQ = 6 cm, ∠P = 60°. Find PR.",
+      "options": {
+        "A": "PR = 12 cm",
+        "B": "PR = 9 cm",
+        "C": "PR = 8 cm",
+        "D": "PR = 6 cm"
+      },
+      "answer": {
+        "correct_option": "B",
+        "explanation": "SAS similarity requires two sides in the same ratio and the included angle equal. Use proportion to find the unknown side.",
+        "steps": {
+          "step1": "△ABC ∼ △PQR (SAS).",
+          "step2": "AB/PQ = AC/PR.",
+          "step3": "4/6 = 6/PR.",
+          "step4": "Cross-multiply: 4 × PR = 36.",
+          "step5": "PR = 9 cm."
+        }
+      }
+    },
+    {
+      "id": 6,
+      "difficulty_level": "basic",
+      "question": "Triangles ABC and DEF are similar by the AA criterion. If ∠A = 70° and ∠B = 50°, find ∠F.",
+      "options": {
+        "A": "60°",
+        "B": "70°",
+        "C": "50°",
+        "D": "40°"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use the triangle angle-sum property to find the third angle of triangle ABC, then equate it to the corresponding angle in triangle DEF since the triangles are similar.",
+        "steps": {
+          "step1": "In △ABC, the sum of angles = 180°.",
+          "step2": "∠C = 180° − (70° + 50°) = 60°.",
+          "step3": "Corresponding angle in △DEF is ∠F.",
+          "step4": "Hence, ∠F = 60°."
+        }
+      }
+    },
+    {
+      "id": 7,
+      "difficulty_level": "intermediate",
+      "question": "In △ABC, D is on AB and E is on AC such that ∠ADE = ∠ABC. If AD = 4 cm, AB = 10 cm, AE = 6 cm, find AC using similarity.",
+      "options": {
+        "A": "12 cm",
+        "B": "10 cm",
+        "C": "15 cm",
+        "D": "9 cm"
+      },
+      "answer": {
+        "correct_option": "C",
+        "explanation": "When one pair of corresponding angles are equal and another pair are the same common angle, triangles are similar by AA criterion. Then use proportional sides to find AC.",
+        "steps": {
+          "step1": "Given ∠A common, ∠ADE = ∠ABC.",
+          "step2": "Therefore △ADE ∼ △ABC (AA similarity).",
+          "step3": "So AD/AB = AE/AC.",
+          "step4": "4/10 = 6/AC.",
+          "step5": "Cross-multiply → 4 × AC = 60.",
+          "step6": "AC = 15 cm."
+        }
+      }
+    },
+    {
+      "id": 8,
+      "difficulty_level": "intermediate",
+      "question": "In △ABC, D is on BC such that AD bisects ∠A. If △ABD ∼ △CAD (SAS similarity), AB = 12 cm, AC = 20 cm, BD = 5 cm, find CD.",
+      "options": {
+        "A": "8.33 cm",
+        "B": "10 cm",
+        "C": "7.5 cm",
+        "D": "9 cm"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Angle bisector creates two triangles sharing one equal angle. Since △ABD ∼ △CAD, corresponding sides are proportional.",
+        "steps": {
+          "step1": "△ABD ∼ △CAD ⇒ AB/AC = BD/CD.",
+          "step2": "Substitute known sides: 12/20 = 5/CD.",
+          "step3": "Cross-multiply → 12 × CD = 100.",
+          "step4": "CD = 100 / 12 = 25/3 = 8.33 cm."
+        }
+      }
+    },
+    {
+      "id": 9,
+      "difficulty_level": "intermediate",
+      "question": "AB ∥ CD and O is the intersection point of diagonals. △OAB ∼ △OCD (AA similarity). If OA = 3x − 19, OB = x − 4, OC = x − 3, and OD = 4, find x.",
+      "options": {
+        "A": "x = 8",
+        "B": "x = 11",
+        "C": "x = 6",
+        "D": "x = 9"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Parallel lines give equal corresponding angles, so triangles are similar. Use ratio of corresponding sides to set up an equation and solve for x.",
+        "steps": {
+          "step1": "△OAB ∼ △OCD (AA similarity).",
+          "step2": "OA/OC = OB/OD.",
+          "step3": "(3x − 19)/(x − 3) = (x − 4)/4.",
+          "step4": "Cross-multiply → 4(3x − 19) = (x − 4)(x − 3).",
+          "step5": "12x − 76 = x² − 7x + 12.",
+          "step6": "Rearrange → x² − 19x + 88 = 0.",
+          "step7": "Factorize → (x − 8)(x − 11) = 0.",
+          "step8": "x = 8 or x = 11; check values → x = 8 valid."
+        }
+      }
+    },
+    {
+      "id": 10,
+      "difficulty_level": "intermediate",
+      "question": "In right triangle ABC, ∠B = 90°, BD ⟂ AC. Prove △ABC ∼ △DBC (AA criterion). If AB = 5.7 cm, BD = 3.8 cm, CD = 5.4 cm, find BC.",
+      "options": {
+        "A": "8.1 cm",
+        "B": "7.5 cm",
+        "C": "6.8 cm",
+        "D": "9 cm"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Altitude on the hypotenuse forms two smaller triangles similar to the original right triangle. Use the proportionality of sides to find BC.",
+        "steps": {
+          "step1": "∠BDC = ∠ABC = 90°, ∠C common ⇒ △ABC ∼ △DBC (AA).",
+          "step2": "By similarity: AB/DB = BC/DC.",
+          "step3": "Substitute → 5.7/3.8 = BC/5.4.",
+          "step4": "Cross-multiply → BC = (5.7 × 5.4) / 3.8.",
+          "step5": "BC = 30.78 / 3.8 = 8.1 cm."
+        }
+      }
+    },
+    {
+      "id": 11,
+      "difficulty_level": "intermediate",
+      "question": "In △ABC and △DEF, AB/DE = AC/DF = 2/3 and ∠A = ∠D = 60°. Prove they are similar and find BC if EF = 9 cm.",
+      "options": {
+        "A": "BC = 6 cm",
+        "B": "BC = 7 cm",
+        "C": "BC = 5 cm",
+        "D": "BC = 9 cm"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Two sides proportional and included angle equal ⇒ SAS similarity. Use proportional sides to find missing length.",
+        "steps": {
+          "step1": "AB/DE = AC/DF = 2/3 and ∠A = ∠D.",
+          "step2": "Hence △ABC ∼ △DEF (SAS criterion).",
+          "step3": "BC/EF = 2/3.",
+          "step4": "BC/9 = 2/3 ⇒ BC = 6 cm."
+        }
+      }
+    },
+    {
+      "id": 12,
+      "difficulty_level": "intermediate",
+      "question": "In right triangle ABC, ∠B = 90°, BD ⟂ AC. Prove △ADB ∼ △ABC ∼ △BDC using AA criterion. If AD = 3 cm, DC = 4 cm, find BD.",
+      "options": {
+        "A": "3.46 cm",
+        "B": "4 cm",
+        "C": "5 cm",
+        "D": "2√3 cm"
+      },
+      "answer": {
+        "correct_option": "D",
+        "explanation": "The altitude to the hypotenuse creates three similar triangles. Use their proportional sides to find BD.",
+        "steps": {
+          "step1": "△ADB, △ABC, and △BDC all have right angles.",
+          "step2": "Common angles ⇒ all similar by AA.",
+          "step3": "△ADB ∼ △BDC ⇒ AD/BD = BD/DC.",
+          "step4": "3/BD = BD/4.",
+          "step5": "BD² = 12 ⇒ BD = √12 = 2√3 = 3.46 cm."
+        }
+      }
+    },
+    {
+      "id": 13,
+      "difficulty_level": "intermediate",
+      "question": "In parallelogram ABCD, E is on AD produced and BE intersects CD at F. Prove △ABE ∼ △CFB using the AA criterion.",
+      "options": {
+        "A": "AA similarity",
+        "B": "SAS similarity",
+        "C": "SSS similarity",
+        "D": "Not similar"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use the properties of parallel lines in a parallelogram to show that alternate interior angles are equal, proving AA similarity.",
+        "steps": {
+          "step1": "AB ∥ CD ⇒ ∠ABE = ∠CFB.",
+          "step2": "AE ∥ BC ⇒ ∠AEB = ∠CBF.",
+          "step3": "Two pairs of equal angles ⇒ △ABE ∼ △CFB (AA)."
+        }
+      }
+    },
+    {
+      "id": 14,
+      "difficulty_level": "intermediate",
+      "question": "If △ABE ≅ △ACD, prove △ADE ∼ △ABC using appropriate similarity criterion.",
+      "options": {
+        "A": "SAS similarity",
+        "B": "AA similarity",
+        "C": "SSS similarity",
+        "D": "None"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Congruence implies all sides and angles equal. Use proportional sides and equal included angle to prove similarity of another pair of triangles.",
+        "steps": {
+          "step1": "From △ABE ≅ △ACD: AB = AC, AE = AD, ∠BAE = ∠CAD.",
+          "step2": "In △ADE and △ABC, ∠DAE = ∠BAC (common angle).",
+          "step3": "AD/AB = AE/AC = 1.",
+          "step4": "Therefore △ADE ∼ △ABC (SAS similarity)."
+        }
+      }
+    },
+    {
+      "id": 15,
+      "difficulty_level": "intermediate",
+      "question": "△ODC ∼ △OBA by AA criterion. If ∠BOC = 125° and ∠CDO = 70°, find ∠DOC, ∠DCO, and ∠OAB.",
+      "options": {
+        "A": "∠DOC = 55°, ∠DCO = 55°, ∠OAB = 70°",
+        "B": "∠DOC = 60°, ∠DCO = 50°, ∠OAB = 70°",
+        "C": "∠DOC = 55°, ∠DCO = 60°, ∠OAB = 65°",
+        "D": "∠DOC = 50°, ∠DCO = 55°, ∠OAB = 70°"
+      },
+      "answer": {
+        "correct_option": "A",
+        "explanation": "Use the linear pair relation to find ∠DOC, then triangle sum to find ∠DCO, and corresponding angle equality from AA similarity.",
+        "steps": {
+          "step1": "∠DOC = 180° − 125° = 55° (linear pair).",
+          "step2": "In △ODC, ∠DCO = 180° − (70° + 55°) = 55°.",
+          "step3": "Since △ODC ∼ △OBA (AA), ∠OAB = ∠ODC = 70°."
+        }
+      }
+    },
+   {
+  "id": 16,
+  "difficulty_level": "advanced",
+  "case_number": "CASE #001",
+  "case_title": "🚂 The Missing Railroad Mystery",
+  "case_file": {
+    "briefing": "URGENT! Detective, the city's train system is in chaos! Three parallel railroad tracks (AB, CD, and EF) stretch across the city, but something's wrong...",
+    "crime_scene": "💀 The chief engineer has vanished! He left behind a torn notebook with these measurements scribbled on it:",
+    "evidence_found": {
+      "track_AB": "6 cm long",
+      "track_CD": "❓ MISSING - marked as 'x'",
+      "track_EF": "10 cm long",
+      "gap_BD": "4 cm distance",
+      "gap_DF": "❓ MISSING - marked as 'y'"
+    },
+    "mystery": "Two critical measurements are GONE! Without them, the trains will crash into each other! The tracks are perfectly parallel and the inspection paths cross them at specific points.",
+    "your_mission": "Find the missing values x and y before the morning train arrives! Remember: Points B, D, F lie on one straight inspection path. Points A, C, E lie on another straight path. Use your detective skills!"
+  },
+  "question": "What are the values of x and y that will save the city's trains?",
+  "options": {
+    "A": "x = 4 cm, y = 6 cm",
+    "B": "x = 3.75 cm, y = 6.67 cm",
+    "C": "x = 3.5 cm, y = 7 cm",
+    "D": "x = 5 cm, y = 8 cm"
+  },
+  "answer": {
+    "correct_option": "B",
+    "case_status": "✅ CASE SOLVED!",
+    "explanation": "Brilliant detective work! You discovered that the three parallel tracks create similar triangles. By using the AA similarity criterion (parallel lines create equal corresponding angles), you found the proportions needed to calculate the missing measurements!",
+    "steps": {
+      "step1": "🔍 Investigation reveals: △ABF and △EDF are similar (AA criterion) because AB ∥ EF creates equal angles",
+      "step2": "📐 Set up proportion: AB/EF = BD/DF → 6/10 = 4/y",
+      "step3": "🧮 Solve for y: Cross-multiply → 6y = 40 → y = 6.67 cm (First mystery solved!)",
+      "step4": "🔍 Now investigate △ABF and △CDF: They're also similar! Total distance BF = BD + DF = 4 + 6.67 = 10.67 cm",
+      "step5": "📐 Set up new proportion: AB/CD = BF/DF → 6/x = 10.67/6.67",
+      "step6": "🧮 Solve for x: Cross-multiply → 6 × 6.67 = x × 10.67 → x = 3.75 cm (Case closed!)",
+      "step7": "🎉 The trains are saved! You used AA similarity to crack the case!"
+    }
+  }
+},
+{
+  "id": 17,
+  "difficulty_level": "advanced",
+  "case_number": "CASE #002",
+  "case_title": "🏗️ The Architect's Secret Formula",
+  "case_file": {
+    "briefing": "Detective, we found a mysterious construction site! An architect disappeared leaving behind three vertical poles standing perfectly upright from a straight line.",
+    "crime_scene": "🏗️ Three construction poles PA, QB, and RC are standing perpendicular to a straight road AC. The architect left a cryptic note...",
+    "evidence_found": {
+      "pole_PA": "Height = x (unknown)",
+      "pole_QB": "Height = y (unknown)",
+      "pole_RC": "Height = z (unknown)",
+      "cryptic_note": "The poles hold a secret mathematical relationship... if you find it, you'll understand my master plan!"
+    },
+    "mystery": "The poles are positioned such that points P, Q, and R lie on one straight line above the road. What's the hidden relationship between x, y, and z?",
+    "your_mission": "Prove the architect's secret formula: Does 1/x + 1/z = 1/y? This formula is the key to understanding the entire construction blueprint!"
+  },
+  "question": "What is the mathematical relationship between the three pole heights?",
+  "options": {
+    "A": "1/x + 1/z = 1/y",
+    "B": "x + z = y",
+    "C": "x/y = z",
+    "D": "None of these"
+  },
+  "answer": {
+    "correct_option": "A",
+     "case_status": "✅ CASE SOLVED!",
+    "explanation": "Genius detective work! You discovered that the perpendicular poles create right triangles that are similar to each other. Using the AA similarity criterion (all right angles are equal, plus shared angles), you proved the architect's mysterious reciprocal formula!",
+    "steps": {
+      "step1": "🔍 Observe the scene: Three perpendicular poles create three right triangles with the road",
+      "step2": "📐 Key insight: Since P, Q, R are collinear (on one line) and PA, QB, RC are all perpendicular to AC, we have similar triangles!",
+      "step3": "🔺 Compare △APC and △AQB: Both have right angles, they share ∠PAC → Similar by AA!",
+      "step4": "📊 From similarity: AP/AQ = PC/QB → This gives us x/AQ = PC/y",
+      "step5": "🔺 Compare △ARC and △AQB: Again, similar by AA criterion!",
+      "step6": "📊 From this similarity: AR/AQ = RC/QB → This gives us AR/AQ = z/y",
+      "step7": "🧠 Combine the proportions cleverly and simplify...",
+      "step8": "✨ Magic happens: 1/x + 1/z = 1/y (The architect's secret formula is proven!)",
+      "step9": "🎯 The reciprocal relationship reveals the architect's genius construction principle!"
+    }
+  }
+}
+  ]
+}
+ 
