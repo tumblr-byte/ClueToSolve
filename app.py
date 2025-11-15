@@ -382,14 +382,14 @@ def get_hint_from_gemini():
 
     current_question = questions[st.session_state['current_question_index']]
 
-    # Prepare performance data
+    # Prepare performance data - analyze all responses across all levels
     responses = st.session_state['responses']
     topic = current_question.get('topic', 'unknown')
 
-    # Calculate strengths and weaknesses
+    # Calculate overall strengths and weaknesses across all completed questions
     all_topics = set()
-    for q in questions:
-        all_topics.add(q.get('topic', 'unknown'))
+    for response in responses:
+        all_topics.add(response.get('topic', 'unknown'))
 
     strengths = []
     weaknesses = []
@@ -399,20 +399,34 @@ def get_hint_from_gemini():
         if topic_responses:
             accuracy = sum(1 for r in topic_responses if r['is_correct']) / len(topic_responses)
             if accuracy >= 0.7:
-                strengths.append(t)
+                strengths.append(f"{t} ({accuracy*100:.0f}% accuracy)")
             elif accuracy <= 0.5:
-                weaknesses.append(t)
+                weaknesses.append(f"{t} ({accuracy*100:.0f}% accuracy)")
+
+    # Analyze time patterns
+    recent_responses = responses[-5:] if len(responses) >= 5 else responses
+    avg_time_recent = sum(r['time_spent'] for r in recent_responses) / len(recent_responses) if recent_responses else 0
+    current_difficulty = st.session_state['current_difficulty']
+
+    time_analysis = ""
+    if avg_time_recent > 300:  # More than 5 minutes per question
+        time_analysis = "Student is taking longer on recent questions, possibly indicating difficulty."
+    elif avg_time_recent < 60:  # Less than 1 minute
+        time_analysis = "Student is working quickly, showing confidence or rushing."
 
     prompt = f"""
-    You are a helpful math tutor assisting a Class 10 student.
+    You are an AI Detective helping a Class 10 student solve math problems.
 
-    Student is on {st.session_state['current_difficulty']} level, question about "{topic}".
-    Current question: "{current_question['question']}"
+    Student Profile:
+    - Current level: {current_difficulty.title()}
+    - Current topic: {topic}
+    - Strengths (topics with 70%+ accuracy): {', '.join(strengths) if strengths else 'Still developing'}
+    - Weaknesses (topics with 50%- accuracy): {', '.join(weaknesses) if weaknesses else 'None identified yet'}
+    - Time pattern: {time_analysis}
 
-    Their strengths: {', '.join(strengths) if strengths else 'None identified yet'}
-    Their weaknesses: {', '.join(weaknesses) if weaknesses else 'None identified yet'}
+    Question: "{current_question['question']}"
 
-    Provide a helpful hint (2-3 sentences) based on their performance patterns. Don't give away the answer, but guide them toward the correct approach.
+    Based on their strengths, suggest an approach that leverages what they know well. If this is a weak area, suggest building on their strengths. Provide 2-3 helpful sentences that guide without giving away the answer.
     """
 
     try:
@@ -611,34 +625,34 @@ def show_quiz_page():
                     st.session_state['current_page'] = 'case_briefing'
                     st.rerun()
 
-                # Gemini witness in sidebar (only show after first question and when answered)
-                answered_questions = len([r for r in st.session_state['responses'] if r['difficulty'] == st.session_state['current_difficulty']])
-                if answered_questions > 0:  # Show only after answering at least one question
-                    with st.sidebar:
-                        st.subheader("🕵️ Ask Witness")
+        # Gemini witness in sidebar - Show after answering any question in current difficulty
+        answered_questions = len([r for r in st.session_state['responses'] if r['difficulty'] == st.session_state['current_difficulty']])
+        if answered_questions > 0:  # Show only after answering at least one question
+            with st.sidebar:
+                st.subheader("🤖 AI Detective")
 
-                        # Create a form-like interface for hint type selection
-                        hint_type_placeholder = st.empty()
-                        hint_type = hint_type_placeholder.radio(
-                            "What would you like help with?",
-                            ["Hint (subtle guidance)", "Explanation (detailed answer)", "Cancel"],
-                            key="hint_type_radio"
-                        )
+                # Create a form-like interface for hint type selection
+                hint_type_placeholder = st.empty()
+                hint_type = hint_type_placeholder.radio(
+                    "What would you like help with?",
+                    ["Hint (subtle guidance)", "Explanation (detailed answer)", "Cancel"],
+                    key="hint_type_radio"
+                )
 
-                        if st.button("🚨 Consult Witness", key="consult_witness"):
-                            if hint_type == "Cancel":
-                                st.info("Consultation cancelled. Good luck!")
-                            else:
-                                with st.spinner("Consulting the witness..."):
-                                    if hint_type == "Hint (subtle guidance)":
-                                        hint_response = get_hint_from_gemini()
-                                    else:  # Explanation
-                                        hint_response = get_explanation_from_gemini(question)
-                                st.markdown(f'<div class="hint-box">**Witness Says:** {hint_response}</div>', unsafe_allow_html=True)
+                if st.button("🚨 Consult Witness", key="consult_witness"):
+                    if hint_type == "Cancel":
+                        st.info("Consultation cancelled. Good luck!")
+                    else:
+                        with st.spinner("Consulting the witness..."):
+                            if hint_type == "Hint (subtle guidance)":
+                                hint_response = get_hint_from_gemini()
+                            else:  # Explanation
+                                hint_response = get_explanation_from_gemini(question)
+                        st.markdown(f'<div class="hint-box">**Witness Says:** {hint_response}</div>', unsafe_allow_html=True)
 
-                        # Clear the radio selection after use (optional)
-                        if st.button("Clear Selection", key="clear_hint"):
-                            st.rerun()
+                # Clear the radio selection after use (optional)
+                if st.button("Clear Selection", key="clear_hint"):
+                    st.rerun()
 def save_answer(question, selected_label, selected_text):
     """Save answer to session state"""
     question_id = question['id']
@@ -678,6 +692,16 @@ def save_answer(question, selected_label, selected_text):
 
 def complete_difficulty_level():
     """Handle completion of a difficulty level"""
+    questions = get_current_questions()
+    answered_questions_in_level = len([r for r in st.session_state['responses']
+                                       if r.get('difficulty') == st.session_state['current_difficulty']])
+
+    # Check if all questions in this level are answered
+    if answered_questions_in_level < len(questions):
+        # Not all questions completed, stay on current level
+        return
+
+    # All questions in this level are complete
     difficulty = st.session_state['current_difficulty']
 
     if difficulty == 'basic':
