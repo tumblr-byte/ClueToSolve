@@ -506,106 +506,154 @@ def show_quiz_page():
             options = {"A": "Option A", "B": "Option B", "C": "Option C", "D": "Option D"}
             option_keys = ["A", "B", "C", "D"]
 
-        # Get previous answer if exists
-        previous_response = None
+        # Check if this question has already been answered
+        has_answered = False
+        answer_is_correct = False
         for r in st.session_state['responses']:
             if r['question_id'] == question['id']:
-                previous_response = r
+                has_answered = True
+                answer_is_correct = r['is_correct']
                 break
 
-        selected_option = None
-        if previous_response:
-            selected_option = previous_response['selected_option']
+        # If not answered yet, show selection interface
+        if not has_answered:
+            # Radio buttons for answer
+            selected_label = st.radio(
+                "Choose your answer:",
+                option_keys,
+                key=f"q_{question['id']}"
+            )
 
-        # Radio buttons for answer
-        selected_label = st.radio(
-            "Choose your answer:",
-            option_keys,
-            index=option_keys.index(selected_option) if selected_option and selected_option in option_keys else None,
-            key=f"q_{question['id']}"
-        )
-
-        # Navigation buttons
-        col1, col2, col3, col4 = st.columns([1, 1, 1, 3])
-
-        with col1:
-            if st.session_state['current_question_index'] > 0:
-                if st.button("⬅️ Previous", key="prev"):
-                    # Save current answer if selected
-                    if selected_label:
-                        save_answer(question, selected_label, options[selected_label])
-
-                    st.session_state['current_question_index'] -= 1
-                    st.session_state['question_start_time'] = None
-                    st.rerun()
-
-        with col2:
-            next_disabled = selected_label is None
-            next_label = "Next ➡️" if st.session_state['current_question_index'] < len(questions) - 1 else "Finish 🎯"
-
-            if st.button(next_label, key="next", disabled=next_disabled):
-                # Save answer
+            # Submit button
+            submit_disabled = selected_label is None
+            if st.button("✅ Submit Answer", type="primary", disabled=submit_disabled, use_container_width=True):
                 if selected_label:
                     save_answer(question, selected_label, options[selected_label])
-
-                if st.session_state['current_question_index'] < len(questions) - 1:
-                    st.session_state['current_question_index'] += 1
-                    st.session_state['question_start_time'] = None
-                    st.rerun()
-                else:
-                    # Completed difficulty level
-                    complete_difficulty_level()
                     st.rerun()
 
-        with col3:
-            if st.button("🔙 Back to Case"):
-                st.session_state['current_page'] = 'case_briefing'
-                st.rerun()
+        # If answered, show result and explanation
+        else:
+            # Show selected answer
+            selected_text = ""
+            for r in st.session_state['responses']:
+                if r['question_id'] == question['id']:
+                    selected_text = f"{r['selected_option']}: {r['selected_text']}"
+                    break
 
-        with col4:
-            # Gemini witness in sidebar
-            with st.sidebar:
-                st.subheader("🕵️ Ask Witness")
+            st.info(f"**Your Answer:** {selected_text}")
 
-                # Create a form-like interface for hint type selection
-                hint_type_placeholder = st.empty()
-                hint_type = hint_type_placeholder.radio(
-                    "What would you like help with?",
-                    ["Hint (subtle guidance)", "Explanation (detailed answer)", "Cancel"],
-                    key="hint_type_radio"
-                )
+            # Show result message
+            if answer_is_correct:
+                st.success("🎉 Excellent detective work! You got it right!")
+            else:
+                correct_answer = ""
+                try:
+                    if question.get('answer'):
+                        correct_option = question['answer'].get('correct_option', '')
+                        if isinstance(raw_options, dict):
+                            correct_answer = f"{correct_option}: {raw_options.get(correct_option, 'Unknown')}"
+                        else:
+                            # Handle array format
+                            if isinstance(raw_options, list):
+                                index = ord(correct_option.upper()) - ord('A')
+                                if 0 <= index < len(raw_options):
+                                    correct_answer = f"{correct_option}: {raw_options[index]}"
+                            else:
+                                correct_answer = correct_option
+                except:
+                    correct_answer = "Unable to determine correct answer"
 
-                if st.button("🚨 Consult Witness", key="consult_witness"):
-                    if hint_type == "Cancel":
-                        st.info("Consultation cancelled. Good luck!")
+                st.error(f"❌ Oops detective! You missed this part.\n\n**Correct Answer:** {correct_answer}")
+
+            # Show explanation from JSON
+            try:
+                if question.get('answer') and question['answer'].get('explanation'):
+                    st.subheader("📚 Explanation")
+                    st.write(question['answer']['explanation'])
+
+                    if question['answer'].get('steps'):
+                        st.subheader("🔢 Solution Steps")
+                        steps = question['answer']['steps']
+                        if isinstance(steps, dict):
+                            for step_key, step_text in steps.items():
+                                st.write(f"**{step_key.replace('_', ' ').title()}:** {step_text}")
+                        else:
+                            st.write(steps)
+            except:
+                st.info("Answer explanation will be shown below.")
+
+            st.markdown("---")
+
+            # Navigation buttons (after answer is shown)
+            col1, col2, col3 = st.columns([1, 1, 3])
+
+            with col1:
+                if st.session_state['current_question_index'] > 0:
+                    if st.button("⬅️ Previous", key="prev"):
+                        st.session_state['current_question_index'] -= 1
+                        st.session_state['question_start_time'] = None
+                        st.rerun()
+
+            with col2:
+                next_label = "Next ➡️" if st.session_state['current_question_index'] < len(questions) - 1 else "Finish 🎯"
+                if st.button(next_label, key="next"):
+                    if st.session_state['current_question_index'] < len(questions) - 1:
+                        st.session_state['current_question_index'] += 1
+                        st.session_state['question_start_time'] = None
+                        st.rerun()
                     else:
-                        with st.spinner("Consulting the witness..."):
-                            if hint_type == "Hint (subtle guidance)":
-                                hint_response = get_hint_from_gemini()
-                            else:  # Explanation
-                                hint_response = get_explanation_from_gemini(question)
-                        st.markdown(f'<div class="hint-box">**Witness Says:** {hint_response}</div>', unsafe_allow_html=True)
+                        # Completed difficulty level
+                        complete_difficulty_level()
+                        st.rerun()
 
-                # Clear the radio selection after use (optional)
-                if st.button("Clear Selection", key="clear_hint"):
+            with col3:
+                if st.button("🔙 Back to Case", key="back_to_case"):
+                    st.session_state['current_page'] = 'case_briefing'
                     st.rerun()
 
-                # Quick stats
-                st.subheader("📊 Your Progress")
-                responses = st.session_state['responses']
-                total_answered = len(responses)
-                correct = sum(1 for r in responses if r['is_correct'])
+                # Gemini witness in sidebar (only show after first question and when answered)
+                answered_questions = len([r for r in st.session_state['responses'] if r['difficulty'] == st.session_state['current_difficulty']])
+                if answered_questions > 0:  # Show only after answering at least one question
+                    with st.sidebar:
+                        st.subheader("🕵️ Ask Witness")
 
-                if total_answered > 0:
-                    accuracy = correct / total_answered * 100
-                    st.metric("Accuracy", f"{accuracy:.1f}%")
-                    st.metric("Answered", f"{correct}/{total_answered}")
-                else:
-                    st.info("Start answering to see progress!")
+                        # Create a form-like interface for hint type selection
+                        hint_type_placeholder = st.empty()
+                        hint_type = hint_type_placeholder.radio(
+                            "What would you like help with?",
+                            ["Hint (subtle guidance)", "Explanation (detailed answer)", "Cancel"],
+                            key="hint_type_radio"
+                        )
+
+                        if st.button("🚨 Consult Witness", key="consult_witness"):
+                            if hint_type == "Cancel":
+                                st.info("Consultation cancelled. Good luck!")
+                            else:
+                                with st.spinner("Consulting the witness..."):
+                                    if hint_type == "Hint (subtle guidance)":
+                                        hint_response = get_hint_from_gemini()
+                                    else:  # Explanation
+                                        hint_response = get_explanation_from_gemini(question)
+                                st.markdown(f'<div class="hint-box">**Witness Says:** {hint_response}</div>', unsafe_allow_html=True)
+
+                        # Clear the radio selection after use (optional)
+                        if st.button("Clear Selection", key="clear_hint"):
+                            st.rerun()
 def save_answer(question, selected_label, selected_text):
     """Save answer to session state"""
     question_id = question['id']
-    correct_answer = question['answer']['correct_option']
+
+    # Safely get correct answer
+    correct_answer = 'Unknown'
+    try:
+        if question.get('answer') and question['answer'].get('correct_option'):
+            correct_answer = question['answer']['correct_option']
+        else:
+            # Try to infer correct answer from some other source or default
+            correct_answer = 'A'  # Default fallback
+    except:
+        correct_answer = 'A'  # Fallback if anything goes wrong
+
     is_correct = selected_label == correct_answer
     time_spent = time.time() - st.session_state['question_start_time']
 
@@ -893,4 +941,5 @@ def show_results_page():
 
 if __name__ == "__main__":
     main()
+
 
