@@ -1,31 +1,33 @@
 import streamlit as st
 import json
+import base64
 from google.oauth2 import service_account
-from vertexai import generative_models, init as vertex_init
+from vertexai import init as vertex_init
+from vertexai.generative_models import GenerativeModel
 
 def setup_vertex_ai():
     try:
-        # Load secrets from Streamlit Cloud
         project_id = st.secrets["project_id"]
         location = st.secrets["location"]
 
-        # Load service account JSON from secrets (multiline string)
-        service_account_info = json.loads(st.secrets["credentials"])
+        # Decode Base64 → JSON dict
+        decoded_bytes = base64.b64decode(st.secrets["credentials_b64"])
+        credentials_info = json.loads(decoded_bytes.decode("utf-8"))
+
         credentials = service_account.Credentials.from_service_account_info(
-            service_account_info
+            credentials_info
         )
 
-        # Initialize Vertex AI
+        # Init Vertex AI
         vertex_init(
             project=project_id,
             location=location,
             credentials=credentials
         )
 
-        # Return the model instance
-        return generative_models.GenerativeModel("gemini-2.5-flash")
+        return GenerativeModel("gemini-2.5-flash")
 
-    except KeyError as e:
-        raise Exception(f"Missing secret: {e}")
     except Exception as e:
-        raise Exception(f"Failed to setup Vertex AI: {str(e)}")
+        raise Exception(f"Vertex setup failed: {e}")
+
+
