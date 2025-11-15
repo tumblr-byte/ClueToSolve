@@ -333,15 +333,39 @@ def initialize_session_state():
 
 def show_navigation():
     """Show professional navigation bar"""
+    # Try to load images, fallback to emoji if not found
+    try:
+        from PIL import Image
+        import os
+        
+        logo_html = ""
+        if os.path.exists('logo.png'):
+            logo = Image.open('logo.png')
+            st.sidebar.image(logo, width=1)  # Hidden trick to load image
+            logo_html = '<img src="logo.png" class="logo-img" alt="Logo">'
+        else:
+            logo_html = '<div style="font-size: 2rem;">🔍</div>'
+        
+        avatar_html = ""
+        if os.path.exists('default.jpg'):
+            avatar = Image.open('default.jpg')
+            st.sidebar.image(avatar, width=1)  # Hidden trick
+            avatar_html = '<img src="default.jpg" class="user-avatar" alt="Profile">'
+        else:
+            avatar_html = '<div style="width: 36px; height: 36px; border-radius: 50%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">M</div>'
+    except:
+        logo_html = '<div style="font-size: 2rem;">🔍</div>'
+        avatar_html = '<div style="width: 36px; height: 36px; border-radius: 50%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">M</div>'
+    
     st.markdown(f"""
     <div class="nav-bar">
         <div class="nav-left">
-            <img src="logo.png" class="logo-img" alt="Logo" onerror="this.style.display='none'">
-            <h1 class="app-title">🔍 ClueToSolve</h1>
+            {logo_html}
+            <h1 class="app-title">ClueToSolve</h1>
         </div>
         <div class="nav-right">
             <div class="user-profile">
-                <img src="default.jpg" class="user-avatar" alt="Profile" onerror="this.src='https://via.placeholder.com/36'">
+                {avatar_html}
                 <span class="user-name">Detective {st.session_state['username']}</span>
             </div>
         </div>
@@ -888,6 +912,85 @@ def show_quiz_page():
                     </div>
                     """, unsafe_allow_html=True)
 
+def get_gemini_analysis(responses, topics):
+    """Get AI analysis of strengths, weaknesses, and red herrings"""
+    if st.session_state['gemini_model'] is None:
+        return {
+            'strengths_text': "Keep solving cases to discover your detective powers! 🌟",
+            'weaknesses_text': "Practice makes perfect! The more cases you solve, the stronger you'll become. 💪",
+            'red_herrings_text': "No tricky patterns yet - you're doing great! Keep investigating! 🔍"
+        }
+    
+    # Prepare data for analysis
+    strengths = []
+    weaknesses = []
+    mistakes = {}
+    
+    for topic, stats in topics.items():
+        acc = stats['correct'] / stats['total']
+        if acc >= 0.7:
+            strengths.append(f"{topic} ({acc*100:.0f}%)")
+        elif acc < 0.7:
+            weaknesses.append(f"{topic} ({acc*100:.0f}%)")
+    
+    for r in responses:
+        if not r['is_correct']:
+            topic = r['topic']
+            mistakes[topic] = mistakes.get(topic, 0) + 1
+    
+    # Create prompts for Gemini
+    prompt = f"""You're a friendly detective mentor talking to a nervous 10th grader who just solved math problems.
+
+Results:
+- Total questions: {len(responses)}
+- Correct: {sum(1 for r in responses if r['is_correct'])}
+- Topics where they did well (70%+): {', '.join(strengths) if strengths else 'Still building'}
+- Topics needing practice (<70%): {', '.join(weaknesses) if weaknesses else 'None'}
+- Common mistake areas: {', '.join([f"{k} ({v} mistakes)" for k, v in sorted(mistakes.items(), key=lambda x: x[1], reverse=True)[:3]]) if mistakes else 'None'}
+
+Write THREE SHORT sections (2-3 sentences each, use emojis, be encouraging):
+
+1. STRENGTHS: Celebrate what they're good at in a fun way
+2. PRACTICE AREAS: Gently suggest what to work on, connect to their strengths
+3. RED HERRINGS: Explain confusing patterns they fell for (if any) in simple terms
+
+Keep it super friendly, use simple words, and make them feel good! Format as:
+STRENGTHS: [text]
+PRACTICE: [text]
+RED_HERRINGS: [text]"""
+
+    try:
+        response = st.session_state['gemini_model'].generate_content(prompt)
+        text = response.text.strip()
+        
+        # Parse response
+        result = {
+            'strengths_text': "Great detective work! 🌟",
+            'weaknesses_text': "Keep practicing! 💪",
+            'red_herrings_text': "Stay alert for tricky clues! 🔍"
+        }
+        
+        if "STRENGTHS:" in text:
+            strengths_part = text.split("STRENGTHS:")[1].split("PRACTICE:")[0].strip()
+            result['strengths_text'] = strengths_part
+        
+        if "PRACTICE:" in text:
+            practice_part = text.split("PRACTICE:")[1].split("RED_HERRINGS:")[0].strip()
+            result['weaknesses_text'] = practice_part
+        
+        if "RED_HERRINGS:" in text:
+            red_part = text.split("RED_HERRINGS:")[1].strip()
+            result['red_herrings_text'] = red_part
+        
+        return result
+        
+    except Exception as e:
+        return {
+            'strengths_text': "You're building your detective skills! Every case makes you stronger! 🌟",
+            'weaknesses_text': "Practice the tough topics - even the best detectives need training! 💪",
+            'red_herrings_text': "Watch out for tricky questions - they're testing your sharp mind! 🔍"
+        }
+
 def calculate_accuracy(responses, difficulty):
     """Calculate accuracy"""
     relevant = [r for r in responses if r['difficulty'] == difficulty]
@@ -897,7 +1000,7 @@ def calculate_accuracy(responses, difficulty):
     return correct / len(relevant)
 
 def show_results_page():
-    """Results page with analysis"""
+    """Results page with AI-powered analysis"""
     show_navigation()
     
     st.markdown("""
@@ -919,6 +1022,15 @@ def show_results_page():
     total_questions = len(responses)
     accuracy = total_correct / total_questions
     avg_time = sum(r['time_spent'] for r in responses) / total_questions
+
+    # Calculate by difficulty
+    basic_responses = [r for r in responses if r['difficulty'] == 'basic']
+    inter_responses = [r for r in responses if r['difficulty'] == 'intermediate']
+    advanced_responses = [r for r in responses if r['difficulty'] == 'advanced']
+    
+    basic_correct = sum(1 for r in basic_responses if r['is_correct'])
+    inter_correct = sum(1 for r in inter_responses if r['is_correct'])
+    advanced_correct = sum(1 for r in advanced_responses if r['is_correct'])
 
     # Detective Rank
     if accuracy >= 0.9:
@@ -945,30 +1057,30 @@ def show_results_page():
     </div>
     """, unsafe_allow_html=True)
 
-    # Stats
+    # Stats - Show by difficulty level
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-value">{total_correct}/{total_questions}</div>
-            <div class="metric-label">Cases Solved</div>
+            <div class="metric-value">{basic_correct}/{len(basic_responses)}</div>
+            <div class="metric-label">🔍 Clues Found</div>
         </div>
         """, unsafe_allow_html=True)
 
     with col2:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-value">{accuracy*100:.0f}%</div>
-            <div class="metric-label">Accuracy</div>
+            <div class="metric-value">{inter_correct}/{len(inter_responses)}</div>
+            <div class="metric-label">🔎 Evidence Analyzed</div>
         </div>
         """, unsafe_allow_html=True)
 
     with col3:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-value">{avg_time:.0f}s</div>
-            <div class="metric-label">Avg Time</div>
+            <div class="metric-value">{advanced_correct}/{len(advanced_responses)}</div>
+            <div class="metric-label">🚨 Cases Solved</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -982,42 +1094,7 @@ def show_results_page():
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-value">{streak}</div>
-            <div class="metric-label">Streak</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.markdown("---")
-
-    # Progress by difficulty
-    st.markdown("### 📊 Performance by Difficulty")
-    
-    basic_acc = calculate_accuracy(responses, 'basic')
-    inter_acc = calculate_accuracy(responses, 'intermediate')
-    adv_acc = calculate_accuracy(responses, 'advanced')
-
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.markdown(f"""
-        <div class="metric-card">
-            <div class="metric-value">{basic_acc*100:.0f}%</div>
-            <div class="metric-label">🔍 Basic</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col2:
-        st.markdown(f"""
-        <div class="metric-card">
-            <div class="metric-value">{inter_acc*100:.0f}%</div>
-            <div class="metric-label">🔎 Intermediate</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col3:
-        st.markdown(f"""
-        <div class="metric-card">
-            <div class="metric-value">{adv_acc*100:.0f}%</div>
-            <div class="metric-label">🚨 Advanced</div>
+            <div class="metric-label">🔥 Streak</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -1033,38 +1110,54 @@ def show_results_page():
         if r['is_correct']:
             topics[topic]['correct'] += 1
 
+    # Get AI Analysis
+    with st.spinner("🤖 Detective AI is analyzing your investigation..."):
+        ai_analysis = get_gemini_analysis(responses, topics)
+
     col1, col2 = st.columns(2)
 
     with col1:
         st.markdown("### 💪 Your Strengths")
         st.markdown('<div class="analysis-card">', unsafe_allow_html=True)
+        
+        # Show AI analysis
+        st.markdown(f'<div class="strength-item">{ai_analysis["strengths_text"]}</div>', unsafe_allow_html=True)
+        
+        # Show data
         strengths_found = False
         for topic, stats in topics.items():
             acc = stats['correct'] / stats['total']
             if acc >= 0.7:
                 strengths_found = True
                 st.markdown(f'<div class="strength-item">✅ {topic}: {acc*100:.0f}% ({stats["correct"]}/{stats["total"]})</div>', unsafe_allow_html=True)
-        if not strengths_found:
-            st.info("Keep investigating to build strengths!")
+        
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col2:
         st.markdown("### 🎯 Practice These")
         st.markdown('<div class="analysis-card">', unsafe_allow_html=True)
+        
+        # Show AI analysis
+        st.markdown(f'<div class="weakness-item">{ai_analysis["weaknesses_text"]}</div>', unsafe_allow_html=True)
+        
+        # Show data
         weaknesses_found = False
         for topic, stats in topics.items():
             acc = stats['correct'] / stats['total']
             if acc < 0.7:
                 weaknesses_found = True
                 st.markdown(f'<div class="weakness-item">⚠️ {topic}: {acc*100:.0f}% ({stats["correct"]}/{stats["total"]})</div>', unsafe_allow_html=True)
-        if not weaknesses_found:
-            st.success("No weak spots detected!")
+        
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # Red Herrings
+    # Red Herrings with AI explanation
     st.markdown("### 🚩 Red Herrings (Confusion Points)")
     st.markdown('<div class="analysis-card">', unsafe_allow_html=True)
     
+    # Show AI analysis first
+    st.markdown(f'<div class="suspect-item">{ai_analysis["red_herrings_text"]}</div>', unsafe_allow_html=True)
+    
+    # Show data
     mistake_patterns = {}
     for r in responses:
         if not r['is_correct']:
@@ -1074,9 +1167,7 @@ def show_results_page():
     if mistake_patterns:
         sorted_mistakes = sorted(mistake_patterns.items(), key=lambda x: x[1], reverse=True)[:3]
         for topic, count in sorted_mistakes:
-            st.markdown(f'<div class="suspect-item">🔍 Review {topic} - {count} mistake(s)</div>', unsafe_allow_html=True)
-    else:
-        st.success("No confusion detected!")
+            st.markdown(f'<div class="suspect-item">🔍 {topic}: {count} mistake(s) - Review this topic!</div>', unsafe_allow_html=True)
     
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1209,3 +1300,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
