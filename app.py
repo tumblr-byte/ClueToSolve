@@ -941,5 +941,3 @@ def show_results_page():
 
 if __name__ == "__main__":
     main()
-
-
