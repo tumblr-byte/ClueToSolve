@@ -1,4 +1,4 @@
-# 🕵️ Math Detective
+# 🕵️ClueToSolve
 
 A gamified learning platform for Class 10 Math students, designed as a detective-themed quiz application where students solve mathematical "cases" to unlock advanced problems.
 
@@ -86,9 +86,9 @@ math-detective/
 1. **Home Page**: Select a chapter and subtopic to investigate
 2. **Case Briefing**: Review the advanced case (locked until you complete basic questions)
 3. **Investigation Flow**:
-   - 🔍 **Basic Questions** (6 questions): Gather clues
-   - 🔎 **Intermediate Questions** (8 questions): Analyze evidence
-   - 🚨 **Advanced Questions** (1-2 questions): Crack the case
+   - 🔍 **Basic Questions** (4 questions): Gather clues
+   - 🔎 **Intermediate Questions** (3 questions): Analyze evidence
+   - 🚨 **Advanced Questions** (1 questions): Crack the case
 4. **AI Witness**: Click "Ask Witness" for personalized hints
 5. **Results**: Review performance, analytics, and recommendations
 
@@ -174,3 +174,4 @@ This project is educational and can be used/modified for learning purposes.
 - Powered by Google Vertex AI
 - Inspired by detective mystery novels
 - Designed for Class 10 Mathematics curriculum
+
