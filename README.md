@@ -95,7 +95,9 @@ math-detective/
 ## 🔧 Technical Details
 
 ### Technologies Used
+
 - **Streamlit**: Web framework for the UI
+- Built entirely with **Cline CLI**
 - **Google Vertex AI (Gemini 2.0)**: AI-powered hints
 - **Plotly**: Data visualization
 - **Pandas**: Data manipulation
@@ -174,4 +176,5 @@ This project is educational and can be used/modified for learning purposes.
 - Powered by Google Vertex AI
 - Inspired by detective mystery novels
 - Designed for Class 10 Mathematics curriculum
+
 
